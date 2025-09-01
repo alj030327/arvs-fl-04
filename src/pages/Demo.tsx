@@ -1,27 +1,115 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckCircle, Clock, Shield, FileText, Users, ArrowRight, ArrowLeft } from "lucide-react";
+import { AlertTriangle, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ProgressIndicator } from "@/components/ProgressIndicator";
+import { Step1PersonalNumber } from "@/components/steps/Step1PersonalNumber";
+import { Step2Assets } from "@/components/steps/Step2Assets";
+import { Step3Distribution } from "@/components/steps/Step3Distribution";
+import { Step4ContactInfo } from "@/components/steps/Step4ContactInfo";
+import { Step5BeneficiarySigning } from "@/components/steps/Step5BeneficiarySigning";
+import { Step4Signing } from "@/components/steps/Step4Signing";
+import { useTranslation } from "@/hooks/useTranslation";
+import { PhysicalAsset } from "@/components/PhysicalAssets";
+
+// Types from Process.tsx
+interface Asset {
+  id: string;
+  bank: string;
+  accountType: string;
+  assetType: string;
+  accountNumber: string;
+  amount: number;
+  toRemain?: boolean;
+  reasonToRemain?: string;
+}
+
+interface Beneficiary {
+  id: string;
+  name: string;
+  personalNumber: string;
+  relationship: string;
+  percentage: number;
+  accountNumber: string;
+  signed?: boolean;
+  signedAt?: string;
+  assetPreferences?: {
+    warrants: 'transfer' | 'sell';
+    certificates: 'transfer' | 'sell';
+    options: 'transfer' | 'sell';
+    futures: 'transfer' | 'sell';
+  };
+  assetNotApplicable?: {
+    warrants?: boolean;
+    certificates?: boolean;
+    options?: boolean;
+    futures?: boolean;
+  };
+}
+
+interface Testament {
+  id: string;
+  filename: string;
+  uploadDate: string;
+  verified: boolean;
+}
+
+interface Heir {
+  personalNumber: string;
+  name: string;
+  relationship: string;
+  inheritanceShare?: number;
+  signed?: boolean;
+  signedAt?: string;
+}
 
 export default function Demo() {
+  const { t, getStepLabels } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const simulateDelay = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setCurrentStep(prev => prev + 1);
-    }, 2000);
+  const [personalNumber, setPersonalNumber] = useState("");
+  const [heirs, setHeirs] = useState<Heir[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
+  const [testament, setTestament] = useState<Testament | null>(null);
+  const [hasTestament, setHasTestament] = useState(false);
+  const [physicalAssets, setPhysicalAssets] = useState<PhysicalAsset[]>([]);
+  const [savedProgress, setSavedProgress] = useState(false);
+
+  const stepLabels = getStepLabels();
+  const totalAmount = assets.reduce((sum, asset) => sum + asset.amount, 0);
+  const totalDistributableAmount = assets.reduce((sum, asset) => sum + (asset.toRemain ? 0 : asset.amount), 0);
+
+  const handleNext = () => {
+    setCurrentStep(prev => Math.min(prev + 1, 6));
   };
 
-  const resetDemo = () => {
+  const handleBack = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleSave = () => {
+    setSavedProgress(true);
+    console.log("Demo: Framsteg sparat!");
+  };
+
+  const handleComplete = () => {
+    console.log("Demo: Går till kontaktuppgifter...");
+    setCurrentStep(4);
+  };
+
+  const handleFinalComplete = () => {
+    console.log("Demo: Arvskifte genomfört!");
+    // Reset demo
     setCurrentStep(1);
-    setIsLoading(false);
+    setPersonalNumber("");
+    setHeirs([]);
+    setAssets([]);
+    setBeneficiaries([]);
+    setTestament(null);
+    setHasTestament(false);
+    setPhysicalAssets([]);
+    setSavedProgress(false);
   };
 
   return (
@@ -41,7 +129,7 @@ export default function Demo() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-4">Demo: Digitalt Arvskifte</h1>
             <p className="text-muted-foreground mb-4">
@@ -58,250 +146,90 @@ export default function Demo() {
             </div>
           </div>
 
-          {/* Progress indicator */}
-          <div className="flex items-center justify-between mb-8">
-            {[1, 2, 3, 4, 5].map((step) => (
-              <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step < currentStep ? 'bg-success text-success-foreground' :
-                  step === currentStep ? 'bg-primary text-primary-foreground' :
-                  'bg-muted text-muted-foreground'
-                }`}>
-                  {step < currentStep ? <CheckCircle className="h-4 w-4" /> : step}
-                </div>
-                {step < 5 && (
-                  <div className={`w-16 h-1 mx-2 ${
-                    step < currentStep ? 'bg-success' : 'bg-muted'
-                  }`} />
-                )}
-              </div>
-            ))}
-          </div>
+          <ProgressIndicator 
+            currentStep={currentStep} 
+            totalSteps={6} 
+            stepLabels={stepLabels} 
+          />
 
-          {/* Step content */}
           {currentStep === 1 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
-                  Steg 1: Identifiering
-                </CardTitle>
-                <CardDescription>
-                  Identifiera dig med personnummer och BankID
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="personnummer">Personnummer</Label>
-                  <Input id="personnummer" placeholder="YYYYMMDD-XXXX" defaultValue="19800101-1234" />
-                </div>
-                <Button onClick={simulateDelay} disabled={isLoading} className="w-full">
-                  {isLoading ? (
-                    <>
-                      <Clock className="mr-2 h-4 w-4 animate-spin" />
-                      Simulerar BankID-signering...
-                    </>
-                  ) : (
-                    <>
-                      Signera med BankID (Demo)
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
+            <Step1PersonalNumber
+              personalNumber={personalNumber}
+              setPersonalNumber={setPersonalNumber}
+              heirs={heirs}
+              setHeirs={setHeirs}
+              onNext={handleNext}
+              t={t}
+            />
           )}
 
           {currentStep === 2 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Steg 2: Registrera tillgångar
-                </CardTitle>
-                <CardDescription>
-                  Lägg till alla tillgångar som ska ingå i arvskiftet
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-success/10 border border-success/20 rounded-lg p-4">
-                  <h4 className="font-medium text-success-foreground mb-2">Automatiskt funna tillgångar:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      Bankkonto: 1234-5678901 (450 000 kr)
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      ISK: Nordnet (125 000 kr)
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      Fastighet: Storgatan 1, Stockholm
-                    </li>
-                  </ul>
-                </div>
-                <Button onClick={simulateDelay} disabled={isLoading} className="w-full">
-                  {isLoading ? (
-                    <>
-                      <Clock className="mr-2 h-4 w-4 animate-spin" />
-                      Hämtar tillgångar...
-                    </>
-                  ) : (
-                    <>
-                      Bekräfta tillgångar
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
+            <Step2Assets
+              assets={assets}
+              setAssets={setAssets}
+              onNext={handleNext}
+              onBack={handleBack}
+              t={t}
+            />
           )}
 
           {currentStep === 3 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Steg 3: Fördela arvet
-                </CardTitle>
-                <CardDescription>
-                  Bestäm hur arvet ska fördelas mellan arvingarna
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div>
-                      <p className="font-medium">Anna Svensson</p>
-                      <p className="text-sm text-muted-foreground">Dotter</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">50%</p>
-                      <p className="text-sm text-muted-foreground">287 500 kr</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <div>
-                      <p className="font-medium">Erik Svensson</p>
-                      <p className="text-sm text-muted-foreground">Son</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">50%</p>
-                      <p className="text-sm text-muted-foreground">287 500 kr</p>
-                    </div>
-                  </div>
-                </div>
-                <Button onClick={simulateDelay} disabled={isLoading} className="w-full">
-                  {isLoading ? (
-                    <>
-                      <Clock className="mr-2 h-4 w-4 animate-spin" />
-                      Beräknar fördelning...
-                    </>
-                  ) : (
-                    <>
-                      Bekräfta fördelning
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
+            <Step3Distribution
+              beneficiaries={beneficiaries}
+              setBeneficiaries={setBeneficiaries}
+              totalAmount={totalDistributableAmount}
+              assets={assets}
+              personalNumber={personalNumber}
+              testament={testament}
+              setTestament={setTestament}
+              hasTestament={hasTestament}
+              setHasTestament={setHasTestament}
+              physicalAssets={physicalAssets}
+              setPhysicalAssets={setPhysicalAssets}
+              onNext={handleNext}
+              onBack={handleBack}
+              onSave={handleSave}
+              onComplete={handleComplete}
+              savedProgress={savedProgress}
+              t={t}
+            />
           )}
 
           {currentStep === 4 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
-                  Steg 4: Digital signering
-                </CardTitle>
-                <CardDescription>
-                  Alla parter signerar digitalt med BankID
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <span>Din signering</span>
-                    <Badge variant="default" className="bg-success text-success-foreground">
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Signerad
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <span>Anna Svensson</span>
-                    <Badge variant="secondary">
-                      <Clock className="h-3 w-3 mr-1" />
-                      Väntar
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 border rounded-lg">
-                    <span>Erik Svensson</span>
-                    <Badge variant="secondary">
-                      <Clock className="h-3 w-3 mr-1" />
-                      Väntar
-                    </Badge>
-                  </div>
-                </div>
-                <Button onClick={simulateDelay} disabled={isLoading} className="w-full">
-                  {isLoading ? (
-                    <>
-                      <Clock className="mr-2 h-4 w-4 animate-spin" />
-                      Simulerar signeringar...
-                    </>
-                  ) : (
-                    <>
-                      Simulera alla signeringar
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
+            <Step4ContactInfo
+              heirs={heirs}
+              setHeirs={setHeirs}
+              personalNumber={personalNumber}
+              totalAmount={totalDistributableAmount}
+              onNext={handleNext}
+              onBack={handleBack}
+              t={t}
+            />
           )}
 
           {currentStep === 5 && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-success" />
-                  Arvskiftet är klart!
-                </CardTitle>
-                <CardDescription>
-                  Alla dokument har signerats och arvskiftet är juridiskt bindande
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-success/10 border border-success/20 rounded-lg p-4">
-                  <h4 className="font-medium text-success-foreground mb-2">Nästa steg:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      Dokument skickas till alla parter
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      Anmälan till Skatteverket
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      Bankärenden hanteras automatiskt
-                    </li>
-                  </ul>
-                </div>
-                <div className="flex gap-4">
-                  <Button onClick={resetDemo} variant="outline" className="flex-1">
-                    Kör demo igen
-                  </Button>
-                  <Link to="/" className="flex-1">
-                    <Button className="w-full">
-                      Tillbaka till startsidan
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+            <Step5BeneficiarySigning
+              heirs={heirs}
+              setHeirs={setHeirs}
+              onNext={handleNext}
+              onBack={handleBack}
+              t={t}
+              totalAmount={totalDistributableAmount}
+            />
+          )}
+
+          {currentStep === 6 && (
+            <Step4Signing
+              personalNumber={personalNumber}
+              heirs={heirs}
+              assets={assets}
+              beneficiaries={beneficiaries}
+              testament={testament}
+              physicalAssets={physicalAssets}
+              onBack={handleBack}
+              onComplete={handleFinalComplete}
+              t={t}
+            />
           )}
         </div>
       </div>
