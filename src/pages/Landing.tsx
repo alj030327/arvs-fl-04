@@ -27,7 +27,7 @@ export default function Landing() {
               Priser
             </a>
           </nav>
-          <Link to="/process">
+          <Link to="/payment">
             <Button>Starta nu</Button>
           </Link>
         </div>
@@ -48,15 +48,17 @@ export default function Landing() {
             Spara tid, minska stress och säkerställ att allt görs rätt från första början.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/process">
+            <Link to="/payment">
               <Button size="lg" className="w-full sm:w-auto">
                 Starta ditt arvskifte
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Se demo
-            </Button>
+            <Link to="/demo">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                Se demo
+              </Button>
+            </Link>
           </div>
           
           {/* Trust indicators */}
@@ -70,8 +72,8 @@ export default function Landing() {
               <span>Juridiskt bindande</span>
             </div>
             <div className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-warning" />
-              <span>4.8/5 i betyg</span>
+              <CheckCircle className="h-5 w-5 text-success" />
+              <span>GDPR-kompatibel</span>
             </div>
           </div>
         </div>
@@ -238,7 +240,7 @@ export default function Landing() {
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>E-poststöd</span>
                 </div>
-                <Link to="/process" className="block">
+                <Link to="/payment" className="block">
                   <Button className="w-full mt-6" variant="outline">
                     Välj Grundpaket
                   </Button>
@@ -276,7 +278,7 @@ export default function Landing() {
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>Juridisk granskning</span>
                 </div>
-                <Link to="/process" className="block">
+                <Link to="/payment" className="block">
                   <Button className="w-full mt-6">
                     Välj Komplett
                   </Button>
@@ -296,7 +298,7 @@ export default function Landing() {
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
             Starta ditt digitala arvskifte idag. Det tar bara några minuter att komma igång.
           </p>
-          <Link to="/process">
+          <Link to="/payment">
             <Button size="lg" variant="secondary" className="bg-background text-foreground hover:bg-background/90">
               Starta ditt arvskifte nu
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -324,30 +326,30 @@ export default function Landing() {
             <div>
               <h4 className="font-semibold mb-4">Tjänster</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Digitalt arvskifte</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">BankID-signering</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Juridisk rådgivning</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Dokumenthantering</a></li>
+                <li><Link to="/payment" className="hover:text-foreground transition-colors">Digitalt arvskifte</Link></li>
+                <li><Link to="/demo" className="hover:text-foreground transition-colors">Se demo</Link></li>
+                <li><Link to="/about" className="hover:text-foreground transition-colors">Juridisk rådgivning</Link></li>
+                <li><Link to="/contact" className="hover:text-foreground transition-colors">Dokumenthantering</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Vanliga frågor</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Kontakta oss</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Hjälpcenter</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Juridisk information</a></li>
+                <li><Link to="/faq" className="hover:text-foreground transition-colors">Vanliga frågor</Link></li>
+                <li><Link to="/contact" className="hover:text-foreground transition-colors">Kontakta oss</Link></li>
+                <li><Link to="/faq" className="hover:text-foreground transition-colors">Hjälpcenter</Link></li>
+                <li><Link to="/about" className="hover:text-foreground transition-colors">Juridisk information</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Företag</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors">Om oss</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Integritetspolicy</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Användarvillkor</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Karriär</a></li>
+                <li><Link to="/about" className="hover:text-foreground transition-colors">Om oss</Link></li>
+                <li><Link to="/privacy" className="hover:text-foreground transition-colors">Integritetspolicy</Link></li>
+                <li><Link to="/terms" className="hover:text-foreground transition-colors">Användarvillkor</Link></li>
+                <li><Link to="/contact" className="hover:text-foreground transition-colors">Karriär</Link></li>
               </ul>
             </div>
           </div>
