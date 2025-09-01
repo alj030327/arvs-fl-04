@@ -165,7 +165,7 @@ const Index = () => {
             {[
               {
                 title: "Spara tid",
-                description: "Komplettera ditt arvskifte på 30 minuter istället för veckor",
+                description: "Spara dyrbar tid och slipp långa procedurer",
                 icon: Clock,
                 color: "text-primary"
               },
