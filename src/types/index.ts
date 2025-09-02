@@ -304,7 +304,7 @@ export interface FormState<T = unknown> {
 }
 
 export interface ValidationErrors {
-  readonly [field: string]: string[] | ValidationErrors;
+  [field: string]: string[] | ValidationErrors;
 }
 
 // API and service layer types

@@ -35,7 +35,7 @@ export interface ErrorReport {
 export interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
-  errorInfo: ErrorInfo | null;
+  errorInfo: CustomErrorInfo | null;
   errorId: string | null;
   retryCount: number;
   isReporting: boolean;
@@ -45,7 +45,7 @@ export interface ErrorBoundaryState {
 export interface ErrorBoundaryProps {
   children: ReactNode;
   fallback?: React.ComponentType<ErrorFallbackProps>;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  onError?: (error: Error, errorInfo: CustomErrorInfo) => void;
   enableReporting?: boolean;
   maxRetries?: number;
   isolateErrors?: boolean;
@@ -56,7 +56,7 @@ export interface ErrorBoundaryProps {
 
 export interface ErrorFallbackProps {
   error: Error;
-  errorInfo: ErrorInfo;
+  errorInfo: CustomErrorInfo;
   resetError: () => void;
   retryCount: number;
   maxRetries: number;
@@ -115,7 +115,7 @@ class ErrorReportingService {
 
   async reportError(
     error: Error,
-    errorInfo: ErrorInfo,
+    errorInfo: CustomErrorInfo,
     additionalData?: Record<string, unknown>
   ): Promise<string> {
     const errorReport: ErrorReport = {
@@ -411,15 +411,19 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    const customErrorInfo: CustomErrorInfo = {
+      componentStack: errorInfo.componentStack || 'Unknown component stack',
+    };
+    
     this.setState({
-      errorInfo,
+      errorInfo: customErrorInfo,
       errorId: `boundary_${Date.now()}`,
     });
 
     // Call custom error handler
     if (this.props.onError) {
-      this.props.onError(error, errorInfo);
+      this.props.onError(error, customErrorInfo);
     }
 
     // Auto-report if enabled
@@ -572,11 +576,11 @@ export const ComponentErrorBoundary: React.FC<Omit<ErrorBoundaryProps, 'level'>>
 // HOOKS
 // ============================================================================
 
-export function useErrorHandler(): (error: Error, errorInfo?: Partial<ErrorInfo>) => void {
+export function useErrorHandler(): (error: Error, errorInfo?: Partial<CustomErrorInfo>) => void {
   const errorReportingService = ErrorReportingService.getInstance();
 
-  return React.useCallback((error: Error, errorInfo?: Partial<ErrorInfo>) => {
-    const fullErrorInfo: ErrorInfo = {
+  return React.useCallback((error: Error, errorInfo?: Partial<CustomErrorInfo>) => {
+    const fullErrorInfo: CustomErrorInfo = {
       componentStack: errorInfo?.componentStack || 'Unknown',
       errorBoundary: errorInfo?.errorBoundary,
       errorBoundaryStack: errorInfo?.errorBoundaryStack,
@@ -609,11 +613,11 @@ export function withErrorBoundary<P extends object>(
   Component: React.ComponentType<P>,
   errorBoundaryProps?: Omit<ErrorBoundaryProps, 'children'>
 ): React.ComponentType<P> {
-  const WrappedComponent = React.forwardRef<any, P>((props, ref) => (
+  const WrappedComponent = (props: P) => (
     <ErrorBoundary {...errorBoundaryProps}>
-      <Component {...props} ref={ref} />
+      <Component {...props} />
     </ErrorBoundary>
-  ));
+  );
 
   WrappedComponent.displayName = `withErrorBoundary(${Component.displayName || Component.name})`;
 
@@ -632,7 +636,7 @@ export function setupGlobalErrorHandling(): void {
   // Handle unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {
     const error = new Error(event.reason?.message || 'Unhandled Promise Rejection');
-    const errorInfo: ErrorInfo = {
+    const errorInfo: CustomErrorInfo = {
       componentStack: 'Promise rejection',
     };
 
@@ -648,7 +652,7 @@ export function setupGlobalErrorHandling(): void {
   // Handle uncaught errors
   window.addEventListener('error', (event) => {
     const error = event.error || new Error(event.message);
-    const errorInfo: ErrorInfo = {
+    const errorInfo: CustomErrorInfo = {
       componentStack: `${event.filename}:${event.lineno}:${event.colno}`,
     };
 
