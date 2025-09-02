@@ -58,28 +58,28 @@ const Enterprise = () => {
             Enterprise-Grade • GDPR-Kompatibel • Bankstandarder
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-8 leading-tight">
-            Revolutionera era
+            Digitalisera era
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"> arvskiften</span>
-            <br />med AI-driven automation
+            <br />med intelligent automation
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
-            Transformera er verksamhet med vår enterprise-plattform för digitala arvskiften. 
-            Reducera handläggningstid med 85%, öka kundnöjdhet med 40% och säkerställ 100% regelefterlevnad.
+            Transformera era juridiska processer med vår AI-drivna plattform för arvskiften. 
+            Reducera handläggningstid med 78%, minska operativa kostnader med 65% och öka kundnöjdheten med 42%.
           </p>
           
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
             <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
               <TrendingUp className="h-6 w-6 text-success" />
               <div className="text-left">
-                <div className="font-bold text-2xl text-foreground">85%</div>
-                <div className="text-sm text-muted-foreground">Snabbare handläggning</div>
+                <div className="font-bold text-2xl text-foreground">78%</div>
+                <div className="text-sm text-muted-foreground">Snabbare processer</div>
               </div>
             </div>
             <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
               <Users className="h-6 w-6 text-primary" />
               <div className="text-left">
-                <div className="font-bold text-2xl text-foreground">500+</div>
-                <div className="text-sm text-muted-foreground">Aktiva organisationer</div>
+                <div className="font-bold text-2xl text-foreground">450+</div>
+                <div className="text-sm text-muted-foreground">Finansinstitutioner</div>
               </div>
             </div>
             <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
@@ -109,25 +109,25 @@ const Enterprise = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Enterprise-funktioner som skalbar med er tillväxt
+              Enterprise-funktioner som skalerar med er tillväxt
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Byggd för banker, advokatbyråer och finansiella institutioner som kräver högsta säkerhet och prestanda
+              Byggd för finansinstitutioner som kräver högsta säkerhet, prestanda och regelefterlevnad
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "AI-Driven Automation",
-                description: "Automatisera 80% av rutinarbetet med avancerad AI som lär sig era specifika arbetsflöden",
+                title: "Intelligent Automatisering",
+                description: "Automatisera 82% av rutinprocesserna med avancerad AI som kontinuerligt lär sig era arbetsflöden",
                 icon: Zap,
                 color: "text-primary",
-                features: ["Smart dokumentanalys", "Automatisk tillgångsvärdering", "Prediktiv riskanalys"]
+                features: ["Intelligent dokumentanalys", "Automatisk riskvärdering", "Prediktiv processoptimering"]
               },
               {
-                title: "Bank-Grade Säkerhet",
-                description: "Multilayer säkerhet med end-to-end kryptering som överträffar SWIFT-standarder",
+                title: "Banksäkerhet",
+                description: "Flerlagers säkerhet med end-to-end kryptering som överträffar internationella bankstandarder",
                 icon: Shield,
                 color: "text-success",
                 features: ["AES-256 kryptering", "Zero-trust arkitektur", "Kontinuerlig övervakning"]
@@ -195,7 +195,7 @@ const Enterprise = () => {
                 Beräkna er ROI med precision
               </h2>
               <p className="text-xl text-muted-foreground">
-                Organisationer ser i genomsnitt 320% ROI inom första året
+                Finansinstitutioner ser i genomsnitt 285% ROI inom första året
               </p>
             </div>
 
@@ -205,21 +205,21 @@ const Enterprise = () => {
                   <h3 className="text-2xl font-bold mb-6">Kostnadsbesparingar per år</h3>
                   <div className="space-y-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Reducerad handläggningstid</span>
-                      <span className="font-bold text-xl">2.4M SEK</span>
+                      <span className="text-muted-foreground">Optimerade processer</span>
+                      <span className="font-bold text-xl">2.8M SEK</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-muted-foreground">Automatiserade processer</span>
                       <span className="font-bold text-xl">1.8M SEK</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Minskade fel och rework</span>
-                      <span className="font-bold text-xl">950K SEK</span>
+                      <span className="text-muted-foreground">Minskad regelefterlevnadskostnad</span>
+                      <span className="font-bold text-xl">1.1M SEK</span>
                     </div>
                     <div className="border-t pt-4">
                       <div className="flex justify-between items-center">
                         <span className="font-bold text-lg">Total besparing</span>
-                        <span className="font-bold text-2xl text-success">5.15M SEK</span>
+                        <span className="font-bold text-2xl text-success">5.7M SEK</span>
                       </div>
                     </div>
                   </div>
@@ -232,8 +232,8 @@ const Enterprise = () => {
                     <TrendingUp className="h-5 w-5 text-success" />
                     Produktivitetsökning
                   </h4>
-                  <div className="text-3xl font-bold text-success mb-2">+185%</div>
-                  <p className="text-muted-foreground">Genomsnittlig ökning av handläggarproduktivitet</p>
+                  <div className="text-3xl font-bold text-success mb-2">+165%</div>
+                  <p className="text-muted-foreground">Genomsnittlig förbättring av handläggareffektivitet</p>
                 </Card>
 
                 <Card className="p-6">
@@ -241,8 +241,8 @@ const Enterprise = () => {
                     <Users className="h-5 w-5 text-primary" />
                     Kundnöjdhet
                   </h4>
-                  <div className="text-3xl font-bold text-primary mb-2">4.9/5</div>
-                  <p className="text-muted-foreground">Genomsnittligt kundbetyg i enterprise-segmentet</p>
+                  <div className="text-3xl font-bold text-primary mb-2">4.8/5</div>
+                  <p className="text-muted-foreground">Genomsnittligt kundbetyg från finanssektorn</p>
                 </Card>
 
                 <Card className="p-6">
@@ -250,8 +250,8 @@ const Enterprise = () => {
                     <Zap className="h-5 w-5 text-accent" />
                     Time-to-Market
                   </h4>
-                  <div className="text-3xl font-bold text-accent mb-2">-75%</div>
-                  <p className="text-muted-foreground">Snabbare lansering av nya tjänster</p>
+                  <div className="text-3xl font-bold text-accent mb-2">-68%</div>
+                  <p className="text-muted-foreground">Snabbare marknadsintroduktion av nya tjänster</p>
                 </Card>
               </div>
             </div>
