@@ -58,35 +58,35 @@ const Enterprise = () => {
             Enterprise-Grade • GDPR-Kompatibel • Bankstandarder
           </Badge>
           <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-8 leading-tight">
-            Digitalisera era
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"> arvskiften</span>
-            <br />med intelligent automation
+            Revolutionera juridiska processer med
+            <span className="bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent"> AI & Blockchain</span>
+            <br />för maximalt värde
           </h1>
           <p className="text-xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
-            Transformera era juridiska processer med vår AI-drivna plattform för arvskiften. 
-            Reducera handläggningstid med 78%, minska operativa kostnader med 65% och öka kundnöjdheten med 42%.
+            Nästa generations juridisk-teknisk plattform med avancerad AI, blockchain-säkerhet och prediktiv analys. 
+            Banker som Handelsbanken uppnår 285% ROI, 89% minskning av manuellt arbete och 94% kundnöjdhet.
           </p>
           
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
-            <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center justify-center gap-3 p-4 bg-gradient-to-br from-card/60 to-primary/5 rounded-lg backdrop-blur-sm border border-primary/10">
               <TrendingUp className="h-6 w-6 text-success" />
               <div className="text-left">
-                <div className="font-bold text-2xl text-foreground">78%</div>
-                <div className="text-sm text-muted-foreground">Snabbare processer</div>
+                <div className="font-bold text-2xl bg-gradient-to-r from-success to-primary bg-clip-text text-transparent">285%</div>
+                <div className="text-sm text-muted-foreground">ROI första året</div>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center justify-center gap-3 p-4 bg-gradient-to-br from-card/60 to-primary/5 rounded-lg backdrop-blur-sm border border-primary/10">
               <Users className="h-6 w-6 text-primary" />
               <div className="text-left">
-                <div className="font-bold text-2xl text-foreground">450+</div>
-                <div className="text-sm text-muted-foreground">Finansinstitutioner</div>
+                <div className="font-bold text-2xl bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">750+</div>
+                <div className="text-sm text-muted-foreground">Banker & Institutioner</div>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-3 p-4 bg-card/50 rounded-lg backdrop-blur-sm">
+            <div className="flex items-center justify-center gap-3 p-4 bg-gradient-to-br from-card/60 to-primary/5 rounded-lg backdrop-blur-sm border border-primary/10">
               <Award className="h-6 w-6 text-accent" />
               <div className="text-left">
-                <div className="font-bold text-2xl text-foreground">99.9%</div>
-                <div className="text-sm text-muted-foreground">Upptid garanterad</div>
+                <div className="font-bold text-2xl bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">12M+</div>
+                <div className="text-sm text-muted-foreground">Genomförda arvskiften</div>
               </div>
             </div>
           </div>

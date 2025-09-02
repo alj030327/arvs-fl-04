@@ -9,15 +9,17 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-gradient-to-r from-primary to-primary-glow text-primary-foreground hover:opacity-90 shadow-[var(--shadow-elegant)]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-primary/20 bg-background hover:bg-primary/5 hover:text-primary hover:border-primary/40 transition-all duration-300",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+          "bg-gradient-to-r from-secondary/90 to-secondary text-secondary-foreground hover:from-secondary hover:to-secondary/90",
+        ghost: "hover:bg-primary/10 hover:text-primary transition-all duration-300",
         link: "text-primary underline-offset-4 hover:underline",
+        premium: "bg-gradient-to-r from-primary via-primary-glow to-primary text-primary-foreground hover:shadow-[var(--shadow-glow)] transition-all duration-500 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700",
+        enterprise: "bg-gradient-to-br from-primary to-accent text-white hover:from-primary-glow hover:to-primary shadow-[var(--shadow-premium)] hover:shadow-[var(--shadow-ai)] transition-all duration-500 font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",
