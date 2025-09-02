@@ -8,51 +8,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Enhanced color palette for enterprise appeal */
-    --background: 220 14% 96%;
-    --foreground: 224 71% 4%;
+    /* Ultra-premium enterprise color palette */
+    --background: 222 12% 95%;
+    --foreground: 225 71% 6%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 24% 16%;
+    --card-foreground: 210 24% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
+    --popover-foreground: 210 24% 12%;
 
-    --primary: 221 83% 53%;
+    /* Enterprise-grade primary colors */
+    --primary: 220 88% 58%;
     --primary-foreground: 210 40% 98%;
-    --primary-hover: 221 83% 45%;
+    --primary-hover: 220 88% 50%;
+    --primary-glow: 220 88% 75%;
     
-    /* Premium gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(221 83% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(197 37% 35%));
+    /* Sophisticated gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 88% 58%), hsl(220 88% 75%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 88% 58%) 0%, hsl(220 100% 65%) 50%, hsl(235 90% 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(197 45% 35%), hsl(197 60% 50%));
+    --gradient-premium: linear-gradient(145deg, hsl(220 88% 58%) 0%, hsl(235 90% 60%) 30%, hsl(250 85% 65%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 12% 98%));
     
-    /* Enhanced shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
-    --shadow-premium: 0 25px 50px -12px hsl(var(--primary) / 0.25);
+    /* Professional shadows & effects */
+    --shadow-elegant: 0 10px 30px -10px hsl(220 88% 58% / 0.25);
+    --shadow-premium: 0 25px 50px -12px hsl(220 88% 58% / 0.2);
+    --shadow-glow: 0 0 40px hsl(220 88% 75% / 0.3);
+    --shadow-card: 0 4px 20px -2px hsl(220 30% 20% / 0.08);
+    --shadow-float: 0 20px 40px -12px hsl(220 30% 20% / 0.12);
 
-    --secondary: 213 27% 84%;
+    /* Refined secondary palette */
+    --secondary: 220 15% 88%;
     --secondary-foreground: 210 24% 16%;
 
-    --muted: 213 27% 84%;
-    --muted-foreground: 215 20% 55%;
+    --muted: 220 15% 88%;
+    --muted-foreground: 215 20% 50%;
 
-    --accent: 197 37% 24%;
+    --accent: 197 50% 32%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 213 27% 84%;
+    --border: 220 15% 85%;
     --input: 0 0% 100%;
-    --ring: 210 100% 30%;
+    --ring: 220 88% 58%;
 
-    --success: 142 71% 45%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -120,14 +129,64 @@ All colors MUST be HSL.
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
-  /* Custom animations */
+  /* Premium animations & effects */
   @keyframes shimmer {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
   }
   
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--primary) / 0.5); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes slide-up {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   .animate-shimmer {
     animation: shimmer 2s infinite;
+  }
+  
+  .animate-glow {
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+  
+  /* Premium glass morphism */
+  .glass-morphism {
+    background: hsla(0, 0%, 100%, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
+  }
+  
+  /* Professional hover effects */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-float);
   }
   
   /* Scroll improvements */

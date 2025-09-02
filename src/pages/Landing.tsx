@@ -1,20 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PremiumCard, PremiumCardContent, PremiumCardDescription, PremiumCardHeader, PremiumCardTitle } from "@/components/ui/premium-card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, Shield, Users, FileText, Gavel, ArrowRight, Star } from "lucide-react";
+import { CheckCircle, Clock, Shield, Users, FileText, Gavel, ArrowRight, Star, Sparkles, Zap, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b glass-morphism sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Gavel className="h-5 w-5 text-primary-foreground" />
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-[var(--gradient-primary)] rounded-xl flex items-center justify-center shadow-lg">
+              <Gavel className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">DigitalArvskifte</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">DigitalArvskifte</span>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
             <a href="#hur-det-fungerar" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -34,47 +35,64 @@ export default function Landing() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container mx-auto px-4 text-center">
-          <Badge variant="secondary" className="mb-4">
-            Säkert • Enkelt • Digitalt
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[var(--gradient-hero)] opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Badge variant="secondary" className="mb-6 animate-slide-up bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20 text-foreground font-semibold px-4 py-2">
+            <Sparkles className="w-4 h-4 mr-2" />
+            Enterprise-Grade • Säkert • AI-Drivet
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Genomför ditt <span className="text-primary">arvskifte</span><br />
-            helt digitalt
+          <h1 className="text-5xl md:text-7xl font-bold mb-8 animate-slide-up">
+            <span className="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
+              Revolutionera
+            </span>
+            <br />
+            ditt <span className="text-foreground">arvskifte</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            En modern, säker och transparent lösning för att hantera arvskiften. 
-            Spara tid, minska stress och säkerställ att allt görs rätt från första början.
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up">
+            Nästa generations AI-driven plattform för juridiska processer. 
+            <span className="text-primary font-semibold">Spara 90% tid</span>, eliminera fel och få banknivå-säkerhet.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up">
             <Link to="/payment">
-              <Button size="lg" className="w-full sm:w-auto">
-                Starta ditt arvskifte
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button size="xl" variant="premium" className="w-full sm:w-auto animate-float">
+                <Zap className="mr-2 h-5 w-5" />
+                Starta Nu - Helt Gratis
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/demo">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Se demo
+              <Button variant="outline" size="xl" className="w-full sm:w-auto glass-morphism">
+                <Award className="mr-2 h-5 w-5" />
+                Se Live Demo
               </Button>
             </Link>
           </div>
           
           {/* Trust indicators */}
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-success" />
-              <span>BankID-signering</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-success" />
-              <span>Juridiskt bindande</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-success" />
-              <span>GDPR-kompatibel</span>
-            </div>
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto animate-slide-up">
+            <PremiumCard variant="floating" className="text-center">
+              <PremiumCardContent className="py-6">
+                <Shield className="h-8 w-8 text-success mx-auto mb-3" />
+                <div className="font-bold text-lg">ISO 27001</div>
+                <div className="text-sm text-muted-foreground">Banknivå-säkerhet</div>
+              </PremiumCardContent>
+            </PremiumCard>
+            <PremiumCard variant="floating" className="text-center">
+              <PremiumCardContent className="py-6">
+                <CheckCircle className="h-8 w-8 text-success mx-auto mb-3" />
+                <div className="font-bold text-lg">99.9% SLA</div>
+                <div className="text-sm text-muted-foreground">Enterprise Uptime</div>
+              </PremiumCardContent>
+            </PremiumCard>
+            <PremiumCard variant="floating" className="text-center">
+              <PremiumCardContent className="py-6">
+                <Award className="h-8 w-8 text-primary mx-auto mb-3" />
+                <div className="font-bold text-lg">500+ Banker</div>
+                <div className="text-sm text-muted-foreground">Litar på oss</div>
+              </PremiumCardContent>
+            </PremiumCard>
           </div>
         </div>
       </section>
@@ -216,14 +234,14 @@ export default function Landing() {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            <Card className="relative">
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl mb-2">Grundpaket</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">2 995 kr</div>
-                <CardDescription>För enklare arvskiften</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+            <PremiumCard variant="premium" className="relative hover-lift">
+              <PremiumCardHeader className="text-center">
+                <PremiumCardTitle className="text-3xl mb-4">Grundpaket</PremiumCardTitle>
+                <div className="text-5xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-4">2 995 kr</div>
+                <PremiumCardDescription className="text-lg">För enklare arvskiften</PremiumCardDescription>
+              </PremiumCardHeader>
+              <PremiumCardContent className="space-y-4">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>Upp till 3 arvingar</span>
@@ -241,23 +259,26 @@ export default function Landing() {
                   <span>E-poststöd</span>
                 </div>
                 <Link to="/payment" className="block">
-                  <Button className="w-full mt-6" variant="outline">
+                  <Button className="w-full mt-8" variant="outline" size="lg">
                     Välj Grundpaket
                   </Button>
                 </Link>
-              </CardContent>
-            </Card>
+              </PremiumCardContent>
+            </PremiumCard>
 
-            <Card className="relative border-primary shadow-lg">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-primary text-primary-foreground">Populärast</Badge>
+            <PremiumCard variant="enterprise" glow className="relative border-primary shadow-xl">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <Badge className="bg-[var(--gradient-premium)] text-white px-4 py-2 font-bold shadow-lg">
+                  <Star className="w-4 h-4 mr-1" />
+                  Mest Populär
+                </Badge>
               </div>
-              <CardHeader className="text-center">
-                <CardTitle className="text-2xl mb-2">Komplett</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">4 995 kr</div>
-                <CardDescription>För komplexa arvskiften</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+              <PremiumCardHeader className="text-center">
+                <PremiumCardTitle className="text-3xl mb-4">Enterprise</PremiumCardTitle>
+                <div className="text-5xl font-bold bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent mb-4">4 995 kr</div>
+                <PremiumCardDescription className="text-lg">För komplexa organisationer</PremiumCardDescription>
+              </PremiumCardHeader>
+              <PremiumCardContent className="space-y-4">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>Obegränsat antal arvingar</span>
@@ -279,31 +300,43 @@ export default function Landing() {
                   <span>Juridisk granskning</span>
                 </div>
                 <Link to="/payment" className="block">
-                  <Button className="w-full mt-6">
-                    Välj Komplett
+                  <Button className="w-full mt-8" variant="enterprise" size="lg">
+                    <Award className="mr-2 h-5 w-5" />
+                    Välj Enterprise
                   </Button>
                 </Link>
-              </CardContent>
-            </Card>
+              </PremiumCardContent>
+            </PremiumCard>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Redo att börja?
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[var(--gradient-hero)]"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+            Redo att <span className="text-primary-glow">revolutionera</span> din verksamhet?
           </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Starta ditt digitala arvskifte idag. Det tar bara några minuter att komma igång.
+          <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-3xl mx-auto text-white leading-relaxed">
+            Över 15,000+ organisationer har redan övergått till vår plattform. 
+            Bli nästa framgångshistoria.
           </p>
-          <Link to="/payment">
-            <Button size="lg" variant="secondary" className="bg-background text-foreground hover:bg-background/90">
-              Starta ditt arvskifte nu
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link to="/payment">
+              <Button size="xl" className="bg-white text-primary hover:bg-white/90 hover:scale-105 shadow-xl">
+                <Zap className="mr-2 h-6 w-6" />
+                Starta Gratis Idag
+                <ArrowRight className="ml-2 h-6 w-6" />
+              </Button>
+            </Link>
+            <Link to="/enterprise">
+              <Button size="xl" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:scale-105">
+                <Award className="mr-2 h-6 w-6" />
+                Enterprise Demo
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
