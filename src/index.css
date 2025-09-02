@@ -30,16 +30,15 @@ All colors MUST be HSL.
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 50%, hsl(var(--accent)) 100%);
     --gradient-premium: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--primary-glow)), hsl(var(--primary)));
     
-    /* AI & Blockchain themed gradients */
+    /* AI & Blockchain themed gradients - blockchain removed */
     --gradient-ai: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(203 99% 40%) 50%, hsl(203 99% 50%) 100%);
-    --gradient-blockchain: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary-glow)));
     
-    /* Enhanced shadows with new blue theme */
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.4);
-    --shadow-premium: 0 25px 50px -12px hsl(var(--primary) / 0.3);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.5);
-    --shadow-ai: 0 20px 60px -20px hsl(var(--primary) / 0.6);
-    --shadow-depth: 0 4px 20px hsl(var(--primary) / 0.15), 0 0 0 1px hsl(var(--primary) / 0.05);
+    /* Enhanced shadows - reduced intensity */
+    --shadow-elegant: 0 4px 12px -4px hsl(var(--primary) / 0.15);
+    --shadow-premium: 0 8px 20px -8px hsl(var(--primary) / 0.12);
+    --shadow-glow: 0 0 20px hsl(var(--primary-glow) / 0.2);
+    --shadow-ai: 0 6px 16px -6px hsl(var(--primary) / 0.18);
+    --shadow-depth: 0 2px 8px hsl(var(--primary) / 0.08), 0 0 0 1px hsl(var(--primary) / 0.03);
 
     --secondary: 213 27% 84%;
     --secondary-foreground: 210 24% 16%;

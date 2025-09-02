@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-primary to-primary-glow text-primary-foreground hover:opacity-90 shadow-[var(--shadow-elegant)]",
+        default: "bg-gradient-to-r from-primary to-primary-glow text-primary-foreground hover:opacity-90",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -18,8 +18,8 @@ const buttonVariants = cva(
           "bg-gradient-to-r from-secondary/90 to-secondary text-secondary-foreground hover:from-secondary hover:to-secondary/90",
         ghost: "hover:bg-primary/10 hover:text-primary transition-all duration-300",
         link: "text-primary underline-offset-4 hover:underline",
-        premium: "bg-gradient-to-r from-primary via-primary-glow to-primary text-primary-foreground hover:shadow-[var(--shadow-glow)] transition-all duration-500 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700",
-        enterprise: "bg-gradient-to-br from-primary to-accent text-white hover:from-primary-glow hover:to-primary shadow-[var(--shadow-premium)] hover:shadow-[var(--shadow-ai)] transition-all duration-500 font-semibold",
+        premium: "bg-gradient-to-r from-primary via-primary-glow to-primary text-primary-foreground hover:opacity-90 transition-all duration-300 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700",
+        enterprise: "bg-gradient-to-br from-primary to-accent text-white hover:from-primary-glow hover:to-primary transition-all duration-300 font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -19,7 +19,7 @@ const AICard = React.forwardRef<HTMLDivElement, AICardProps>(
       <Card
         ref={ref}
         className={cn(
-          "relative overflow-hidden group hover:shadow-[var(--shadow-ai)] transition-all duration-500 border-0",
+          "relative overflow-hidden group hover:shadow-sm transition-all duration-300 border-0",
           "bg-gradient-to-br from-card via-card to-primary/5",
           "before:absolute before:inset-0 before:bg-gradient-to-br before:from-primary/10 before:via-transparent before:to-primary-glow/10",
           "before:opacity-0 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
