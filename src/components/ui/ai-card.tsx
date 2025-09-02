@@ -35,7 +35,7 @@ const AICard = React.forwardRef<HTMLDivElement, AICardProps>(
         
         {badge && (
           <div className="absolute -top-2 -right-2">
-            <Badge className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground border-0 shadow-lg">
+            <Badge className="bg-gradient-to-r from-primary to-primary-glow text-primary-foreground border-0">
               {badge}
             </Badge>
           </div>

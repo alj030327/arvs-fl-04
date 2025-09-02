@@ -202,7 +202,7 @@ const Index = () => {
                 color: "text-accent"
               }
             ].map((benefit, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
+              <Card key={index} className="hover:border-primary/20 transition-colors">
                 <CardHeader>
                   <benefit.icon className={`h-8 w-8 ${benefit.color} mb-2`} />
                   <CardTitle className="text-lg">{benefit.title}</CardTitle>
@@ -260,7 +260,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="relative border-primary shadow-lg">
+            <Card className="relative border-primary">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <Badge className="bg-primary text-primary-foreground">Populärast</Badge>
               </div>

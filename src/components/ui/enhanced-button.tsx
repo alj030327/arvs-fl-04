@@ -13,15 +13,15 @@ const enhancedButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-md hover:shadow-lg transform hover:-translate-y-0.5",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm hover:shadow-md",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md",
+        default: "bg-primary text-primary-foreground hover:bg-primary-hover transform hover:-translate-y-0.5",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        premium: "bg-gradient-to-r from-primary to-primary-hover text-primary-foreground shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-primary/20",
-        success: "bg-success text-success-foreground hover:bg-success/90 shadow-md hover:shadow-lg",
-        gradient: "bg-gradient-to-r from-accent to-primary text-white shadow-lg hover:shadow-xl transform hover:scale-105",
+        premium: "bg-gradient-to-r from-primary to-primary-hover text-primary-foreground transform hover:-translate-y-1 border border-primary/20",
+        success: "bg-success text-success-foreground hover:bg-success/90",
+        gradient: "bg-gradient-to-r from-accent to-primary text-white transform hover:scale-105",
       },
       size: {
         default: "h-10 px-4 py-2",

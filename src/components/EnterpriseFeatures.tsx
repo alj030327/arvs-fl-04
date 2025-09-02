@@ -101,7 +101,7 @@ export const EnterpriseFeatures = () => {
 
           <div className="grid lg:grid-cols-3 gap-6">
             {category.items.map((feature, featureIndex) => (
-              <Card key={featureIndex} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <Card key={featureIndex} className="group hover:border-primary/20 transition-all duration-300 border">
                 <CardHeader>
                   <CardTitle className="text-xl group-hover:text-primary transition-colors">
                     {feature.title}

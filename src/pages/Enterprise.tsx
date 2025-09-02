@@ -29,7 +29,7 @@ const Enterprise = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
                 <Scale className="h-7 w-7 text-white" />
               </div>
               <div>
@@ -161,7 +161,7 @@ const Enterprise = () => {
                 features: ["Custom branding", "API integration", "SSO support"]
               }
             ].map((feature, index) => (
-              <Card key={index} className="relative overflow-hidden group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <Card key={index} className="relative overflow-hidden group hover:border-primary/20 transition-all duration-300 border">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <CardHeader className="relative">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center mb-4">
@@ -282,7 +282,7 @@ const Enterprise = () => {
               { name: "Communication", logo: "💬", description: "Teams, Slack, E-post automation" },
               { name: "Analytics Tools", logo: "📈", description: "Power BI, Tableau, Qlik Sense" }
             ].map((integration, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
+              <Card key={index} className="text-center p-6 hover:border-primary/20 transition-colors">
                 <div className="text-4xl mb-4">{integration.logo}</div>
                 <h3 className="font-bold mb-2">{integration.name}</h3>
                 <p className="text-sm text-muted-foreground">{integration.description}</p>
@@ -334,7 +334,7 @@ const Enterprise = () => {
               </CardContent>
             </Card>
 
-            <Card className="relative border-primary shadow-xl">
+            <Card className="relative border-primary">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <Badge className="bg-gradient-to-r from-primary to-accent text-white">Mest populär</Badge>
               </div>
