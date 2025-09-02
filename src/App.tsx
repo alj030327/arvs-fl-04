@@ -11,6 +11,7 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
+import Enterprise from "./pages/Enterprise";
 import { SignDocument } from "./pages/SignDocument";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/enterprise" element={<Enterprise />} />
           <Route path="/sign/:token" element={<SignDocument />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

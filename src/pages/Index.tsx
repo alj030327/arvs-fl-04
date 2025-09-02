@@ -66,9 +66,11 @@ const Index = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="w-full sm:w-auto">
-              Se demo
-            </Button>
+            <Link to="/demo">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                Se demo
+              </Button>
+            </Link>
           </div>
           
           {/* Trust indicators */}
