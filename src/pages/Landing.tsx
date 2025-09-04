@@ -54,12 +54,12 @@ export default function Landing() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link to="/demo-basic">
+            <Link to="/demo-instructions">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Demo Baspaket
               </Button>
             </Link>
-            <Link to="/demo">
+            <Link to="/demo-instructions">
               <Button variant="secondary" size="lg" className="w-full sm:w-auto">
                 Demo Komplett
               </Button>
@@ -258,7 +258,7 @@ export default function Landing() {
                   <span>Grundläggande support</span>
                 </div>
                 <div className="flex gap-2">
-                  <Link to="/demo-basic" className="flex-1">
+                  <Link to="/demo-instructions" className="flex-1">
                     <Button className="w-full mt-6" variant="outline">
                       Testa Baspaket
                     </Button>
@@ -298,7 +298,7 @@ export default function Landing() {
                   <span>Premium telefonsupport</span>
                 </div>
                 <div className="flex gap-2">
-                  <Link to="/demo" className="flex-1">
+                  <Link to="/demo-instructions" className="flex-1">
                     <Button className="w-full mt-6" variant="outline">
                       Demo Komplett
                     </Button>
@@ -331,7 +331,7 @@ export default function Landing() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Link to="/demo">
+            <Link to="/demo-instructions">
               <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
                 Se demo först
               </Button>
