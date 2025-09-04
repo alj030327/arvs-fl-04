@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Process from "./pages/Process";
 import Demo from "./pages/Demo";
+import DemoBasic from "./pages/DemoBasic";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/" element={<Landing />} />
           <Route path="/process" element={<Process />} />
           <Route path="/demo" element={<Demo />} />
+          <Route path="/demo-basic" element={<DemoBasic />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />

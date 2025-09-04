@@ -54,11 +54,11 @@ export default function Landing() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <a href="https://digitalt-arvskifte-v2-98.lovable.app" target="_blank" rel="noopener noreferrer">
+            <Link to="/demo-basic">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 Demo Baspaket
               </Button>
-            </a>
+            </Link>
             <Link to="/demo">
               <Button variant="secondary" size="lg" className="w-full sm:w-auto">
                 Demo Komplett
@@ -258,11 +258,11 @@ export default function Landing() {
                   <span>Grundläggande support</span>
                 </div>
                 <div className="flex gap-2">
-                  <a href="https://digitalt-arvskifte-v2-98.lovable.app" target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Link to="/demo-basic" className="flex-1">
                     <Button className="w-full mt-6" variant="outline">
                       Testa Baspaket
                     </Button>
-                  </a>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
