@@ -40,12 +40,12 @@ export default function Landing() {
             Säkert • Enkelt • Digitalt
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Sveriges ledande <span className="text-primary">arvskifte</span><br />
-            plattform för banker
+            Digitalt <span className="text-primary">Arvskifte</span><br />
+            enkelt och säkert
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Komplett white-label lösning för banker som vill erbjuda digitala arvskiften. 
-            Från manuell process till fullautomatisk - skalbar för miljontals kunder.
+            Genomför ditt arvskifte digitalt med vår moderna, säkra och transparenta lösning. 
+            Välj mellan manuell process eller fullautomatisk hantering beroende på dina behov.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/payment">
@@ -66,23 +66,23 @@ export default function Landing() {
             </Link>
           </div>
           
-          {/* Enterprise indicators */}
+          {/* Trust indicators */}
           <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-muted-foreground">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-success" />
-              <span>White-label lösning</span>
+              <span>BankID-signering</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-success" />
-              <span>API-integration</span>
+              <span>Juridiskt bindande</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-success" />
-              <span>Skalbar för miljoner</span>
+              <span>GDPR-kompatibel</span>
             </div>
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-success" />
-              <span>2M+ värde för banker</span>
+              <span>Trygg och säker</span>
             </div>
           </div>
         </div>
@@ -93,40 +93,40 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Två nivåer av automatisering
+              Välj den lösning som passar dig
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Från manuell process till fullständig automation - vi täcker alla bankers behov
+              Vi erbjuder två olika nivåer av service för att möta alla behov och budgetar
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {[
               {
-                title: "Baspaket - Manuell process",
-                description: "Digitaliserad blankett för traditionell hantering",
+                title: "Baspaket - Traditionell process",
+                description: "Digital blankett för traditionell hantering av arvskifte",
                 features: [
-                  "Kunden fyller i formulär själv",
-                  "Utskrift av blanketter",
-                  "Manuell signering",
-                  "Bankbesök krävs",
-                  "Lägre kostnad för banken"
+                  "Digitalt formulär som du fyller i själv",
+                  "Utskrift av alla nödvändiga dokument",
+                  "Traditionell signering på papper", 
+                  "Du hanterar bankbesök själv",
+                  "Lägre kostnad och grundläggande service"
                 ],
                 icon: FileText,
-                badge: "Traditionell"
+                badge: "Ekonomisk"
               },
               {
-                title: "Komplett - Fullautomatisk",
-                description: "AI-driven process med API-integrationer",
+                title: "Komplett - Modern process",
+                description: "Fullservice med digital hantering från start till mål",
                 features: [
-                  "Automatisk bankintegration",
-                  "BankID-signering",
-                  "AI-assisterad process",
-                  "Ingen bankbesök",
-                  "Högre kundvärde"
+                  "Automatisk bankintegration och datainhämtning",
+                  "BankID-signering för alla parter",
+                  "Ingen manuell hantering eller bankbesök",
+                  "Fullständig digital process",
+                  "Premium support och hjälp"
                 ],
                 icon: Shield,
-                badge: "Premium"
+                badge: "Populärast"
               }
             ].map((item, index) => (
               <Card key={index} className="relative border-primary/20">
@@ -161,49 +161,49 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Värdeproposition för banker
+              Fördelar med digitalt arvskifte
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Varför denna lösning är värd 2+ miljoner för en bank som förvärvar teknologin
+              Upptäck varför tusentals familjer väljer vår digitala lösning för sina arvskiften
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Komplett teknologistack",
-                description: "Färdig lösning med API:er, AI-integration och skalbar arkitektur värd 500k+ i utveckling",
-                icon: Shield,
+                title: "Spara tid och pengar",
+                description: "Komplettera ditt arvskifte på 30 minuter istället för veckor av byråkrati",
+                icon: Clock,
                 color: "text-primary"
               },
               {
-                title: "Marknadsledande position",
-                description: "First-mover advantage i Sveriges digitala arvskiftesmarknad värd 300k+ i marknadsposition",
-                icon: Star,
+                title: "Säkert & transparent",
+                description: "BankID-signering och fullständig spårbarhet genom hela processen",
+                icon: Shield,
                 color: "text-success"
               },
               {
-                title: "Regulatorisk compliance",
-                description: "Fullständig efterlevnad av svenska juridiska krav, sparar 200k+ i compliance-kostnader",
+                title: "Juridiskt bindande",
+                description: "Alla dokument uppfyller svenska juridiska krav och är godkända av myndigheter",
                 icon: Gavel,
                 color: "text-accent"
               },
               {
-                title: "Kundengagemang",
-                description: "Ökar kundlojalitet och cross-sell möjligheter, genererar 400k+ i årlig omsättning",
-                icon: Users,
+                title: "Automatisk dokumentation",
+                description: "Alla handlingar genereras och arkiveras automatiskt för framtida behov",
+                icon: FileText,
                 color: "text-primary"
               },
               {
-                title: "Operationell effektivitet",
-                description: "Automatisering minskar manuellt arbete med 80%, sparar 300k+ årligen i personalkostnader",
-                icon: Clock,
+                title: "Familjevänligt",
+                description: "Alla arvingar kan delta digitalt oavsett var de befinner sig i världen",
+                icon: Users,
                 color: "text-success"
               },
               {
-                title: "Skalbar intäktsmodell",
-                description: "White-label lösning för andra banker, potentiell licensintäkt 500k+ årligen",
-                icon: FileText,
+                title: "Professionell support",
+                description: "Få hjälp av våra experter när du behöver det, via telefon eller e-post",
+                icon: CheckCircle,
                 color: "text-accent"
               }
             ].map((benefit, index) => (
@@ -226,10 +226,10 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Prissättning för kunder
+              Transparent prissättning
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Två tydliga nivåer som passar olika kundbehov och bankens positionering
+              Välj den nivå av service som passar dina behov. Inga dolda kostnader.
             </p>
           </div>
 
@@ -269,12 +269,12 @@ export default function Landing() {
 
             <Card className="relative border-primary">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-primary text-primary-foreground">Premium</Badge>
+                <Badge className="bg-primary text-primary-foreground">Populärast</Badge>
               </div>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Komplett</CardTitle>
                 <div className="text-4xl font-bold text-primary mb-2">4 995 kr</div>
-                <CardDescription>Fullautomatisk AI-driven process</CardDescription>
+                <CardDescription>Fullservice digital process</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -283,19 +283,19 @@ export default function Landing() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
-                  <span>BankID-signering</span>
+                  <span>BankID-signering för alla</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
-                  <span>AI-assistent</span>
+                  <span>Inga bankbesök nödvändiga</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
-                  <span>Ingen bankbesök</span>
+                  <span>Obegränsat antal arvingar</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-success" />
-                  <span>Premium support</span>
+                  <span>Premium telefonsupport</span>
                 </div>
                 <div className="flex gap-2">
                   <Link to="/demo" className="flex-1">
@@ -319,21 +319,21 @@ export default function Landing() {
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Färdig för förvärv
+            Redo att börja?
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Komplett teknologistack värd 2+ miljoner kr. Perfekt för banker som vill leda digitaliseringen av arvskiften.
+            Starta ditt digitala arvskifte idag. Det tar bara några minuter att komma igång.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/enterprise">
+            <Link to="/payment">
               <Button size="lg" variant="secondary" className="bg-background text-foreground hover:bg-background/90">
-                Kontakta för förvärv
+                Starta ditt arvskifte nu
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <Link to="/demo">
               <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                Se teknisk demo
+                Se demo först
               </Button>
             </Link>
           </div>
