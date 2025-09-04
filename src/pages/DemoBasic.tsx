@@ -22,6 +22,7 @@ import {
   Home
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
 
 interface PersonalInfo {
   personalNumber: string;
@@ -76,6 +77,10 @@ export default function DemoBasic() {
   const totalSteps = 6;
   const progress = (currentStep / totalSteps) * 100;
 
+  const totalShare = heirs.reduce((sum, h) => sum + (parseFloat(h.inheritanceShare) || 0), 0);
+  const shareValid = Math.round(totalShare) === 100;
+  const totalAssetsValue = assets.reduce((sum, a) => sum + (parseFloat(a.value) || 0), 0);
+
   const addHeir = () => {
     setHeirs([...heirs, {
       personalNumber: "",
@@ -110,56 +115,74 @@ export default function DemoBasic() {
   };
 
   const generateDocument = () => {
-    const content = `
-ARVSKIFTESFORMULÄR - BASPAKET
+    const doc = new jsPDF();
+    let y = 15;
 
-=== DÖDSBODELÄGARE ===
-Personnummer: ${personalInfo.personalNumber}
-Namn: ${personalInfo.fullName}
-Adress: ${personalInfo.address}
-Telefon: ${personalInfo.phone}
-E-post: ${personalInfo.email}
+    const addSection = (title: string) => {
+      doc.setFontSize(14);
+      doc.setFont(undefined, 'bold');
+      doc.text(title, 14, y);
+      y += 7;
+      doc.setFont(undefined, 'normal');
+    };
 
-=== AVLIDEN PERSON ===
-Personnummer: ${deceasedInfo.personalNumber}
-Namn: ${deceasedInfo.fullName}
-Dödsdatum: ${deceasedInfo.deathDate}
-Senaste adress: ${deceasedInfo.lastAddress}
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('ARVSKIFTESFORMULÄR - BASPAKET', 14, y);
+    y += 10;
 
-=== ARVINGAR ===
-${heirs.map((heir, index) => `
-Arvinge ${index + 1}:
-Personnummer: ${heir.personalNumber}
-Namn: ${heir.fullName}
-Relation: ${heir.relation}
-Adress: ${heir.address}
-Telefon: ${heir.phone}
-E-post: ${heir.email}
-Arvslott: ${heir.inheritanceShare}
-`).join('')}
+    addSection('DÖDSBODELÄGARE');
+    const ownerLines = doc.splitTextToSize(
+      `Personnummer: ${personalInfo.personalNumber}\nNamn: ${personalInfo.fullName}\nAdress: ${personalInfo.address}\nTelefon: ${personalInfo.phone}\nE-post: ${personalInfo.email}`,
+      180
+    );
+    doc.text(ownerLines, 14, y);
+    y += ownerLines.length * 6 + 4;
 
-=== TILLGÅNGAR ===
-${assets.map((asset, index) => `
-Tillgång ${index + 1}:
-Typ: ${asset.type}
-Beskrivning: ${asset.description}
-Värde: ${asset.value} kr
-Plats: ${asset.location}
-`).join('')}
+    addSection('AVLIDEN PERSON');
+    const deceasedLines = doc.splitTextToSize(
+      `Personnummer: ${deceasedInfo.personalNumber}\nNamn: ${deceasedInfo.fullName}\nDödsdatum: ${deceasedInfo.deathDate}\nSenaste adress: ${deceasedInfo.lastAddress}`,
+      180
+    );
+    doc.text(deceasedLines, 14, y);
+    y += deceasedLines.length * 6 + 4;
 
-VIKTIGT: Detta dokument måste skrivas ut och signeras av alla parter.
-Kontakta respektive bank för att genomföra arvskiftet.
-    `;
+    addSection('ARVINGAR');
+    heirs.forEach((heir, idx) => {
+      const heirLines = doc.splitTextToSize(
+        `Arvinge ${idx + 1}:\nPersonnummer: ${heir.personalNumber}\nNamn: ${heir.fullName}\nRelation: ${heir.relation}\nAdress: ${heir.address}\nTelefon: ${heir.phone}\nE-post: ${heir.email}\nArvslott: ${heir.inheritanceShare}%`,
+        180
+      );
+      doc.text(heirLines, 14, y);
+      y += heirLines.length * 6 + 4;
+      if (y > 270) { doc.addPage(); y = 15; }
+    });
 
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'arvskifte-baspaket.txt';
-    a.click();
-    URL.revokeObjectURL(url);
+    addSection('TILLGÅNGAR');
+    assets.forEach((asset, idx) => {
+      const assetLines = doc.splitTextToSize(
+        `Tillgång ${idx + 1}:\nTyp: ${asset.type}\nBeskrivning: ${asset.description}\nVärde: ${asset.value} kr\nPlats: ${asset.location}`,
+        180
+      );
+      doc.text(assetLines, 14, y);
+      y += assetLines.length * 6 + 4;
+      if (y > 270) { doc.addPage(); y = 15; }
+    });
+
+    // Sammanfattning
+    addSection('SAMMANFATTNING');
+    const totalValue = assets.reduce((sum, a) => sum + (parseFloat(a.value) || 0), 0);
+    const summaryLines = [
+      `Totalt tillgångsvärde: ${totalValue.toLocaleString('sv-SE')} kr`,
+      `Summa arvslotter: ${heirs.reduce((s, h) => s + (parseFloat(h.inheritanceShare) || 0), 0)}% (måste bli 100%)`,
+      '',
+      'VIKTIGT: Detta dokument måste skrivas ut och signeras av alla parter.',
+      'Kontakta respektive bank för att genomföra arvskiftet.'
+    ];
+    doc.text(summaryLines, 14, y);
+
+    doc.save('arvskifte-baspaket.pdf');
   };
-
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -495,6 +518,12 @@ Kontakta respektive bank för att genomföra arvskiftet.
               <Button onClick={addHeir} variant="outline" className="w-full">
                 + Lägg till arvinge
               </Button>
+
+              <div className="text-sm mt-2">
+                Summa arvslotter: <span className={shareValid ? 'text-success' : 'text-destructive'}>{totalShare}%</span> {!shareValid && (
+                  <span className="text-destructive"> (måste bli 100%)</span>
+                )}
+              </div>
             </CardContent>
           </Card>
         );
@@ -748,7 +777,7 @@ Kontakta respektive bank för att genomföra arvskiftet.
               </Link>
               
               {currentStep < totalSteps && (
-                <Button onClick={nextStep} className="flex items-center gap-2">
+                <Button onClick={nextStep} className="flex items-center gap-2" disabled={currentStep === 4 && (!shareValid || heirs.length === 0)}>
                   Nästa
                   <ArrowRight className="h-4 w-4" />
                 </Button>
