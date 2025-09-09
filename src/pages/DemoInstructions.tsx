@@ -94,7 +94,7 @@ export default function DemoInstructions() {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <CreditCard className="h-4 w-4 text-orange-600" />
-                    <span>Kostnad: 1 995 kr</span>
+                    <span>Kostnad: 500 kr</span>
                   </div>
                 </div>
 
@@ -105,9 +105,9 @@ export default function DemoInstructions() {
                   </AlertDescription>
                 </Alert>
 
-                <Link to="/demo-basic-form" className="block">
+                <Link to="/demo-baspaket" className="block">
                   <Button className="w-full bg-orange-600 hover:bg-orange-700">
-                    Testa Baspaket Demo
+                    Demo Baspaket
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -148,7 +148,7 @@ export default function DemoInstructions() {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <CreditCard className="h-4 w-4 text-primary" />
-                    <span>Kostnad: 4 995 kr</span>
+                    <span>Kostnad: 2 500 kr</span>
                   </div>
                 </div>
 
@@ -190,8 +190,8 @@ export default function DemoInstructions() {
                   <tbody className="space-y-2">
                     <tr className="border-b">
                       <td className="py-2 px-3 font-medium">Kostnad</td>
-                      <td className="text-center py-2 px-3">1 995 kr</td>
-                      <td className="text-center py-2 px-3">4 995 kr</td>
+                      <td className="text-center py-2 px-3">500 kr</td>
+                      <td className="text-center py-2 px-3">2 500 kr</td>
                     </tr>
                     <tr className="border-b">
                       <td className="py-2 px-3 font-medium">Formulär</td>
@@ -239,12 +239,12 @@ export default function DemoInstructions() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/payment">
                   <Button size="lg">
-                    Köp Baspaket (1 995 kr)
+                    Köp Baspaket (500 kr)
                   </Button>
                 </Link>
                 <Link to="/payment">
                   <Button size="lg" variant="outline">
-                    Köp Komplett (4 995 kr)
+                    Köp Komplett (2 500 kr)
                   </Button>
                 </Link>
               </div>
