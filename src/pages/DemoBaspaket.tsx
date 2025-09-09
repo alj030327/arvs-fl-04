@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
-import { Step1PersonalNumber } from "@/components/steps/Step1PersonalNumber";
-import { Step2Assets } from "@/components/steps/Step2Assets";
-import { Step3Distribution } from "@/components/steps/Step3Distribution";
-import { Step4Signing } from "@/components/steps/Step4Signing";
+import { Step1PersonalNumber } from "@/components/demo-steps/DemoStep1PersonalNumber";
+import { Step2Assets } from "@/components/demo-steps/DemoStep2Assets";
+import { Step3Distribution } from "@/components/demo-steps/DemoStep3Distribution";
+import { Step4Signing } from "@/components/demo-steps/DemoStep4Signing";
 import { Scale, Globe, ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import { PhysicalAsset } from "@/components/PhysicalAssets";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -241,8 +241,6 @@ const DemoBaspaket = () => {
           <Step1PersonalNumber
             personalNumber={personalNumber}
             setPersonalNumber={setPersonalNumber}
-            heirs={heirs}
-            setHeirs={setHeirs}
             onNext={handleNext}
             t={t}
           />
@@ -252,6 +250,8 @@ const DemoBaspaket = () => {
           <Step2Assets
             assets={assets}
             setAssets={setAssets}
+            physicalAssets={physicalAssets}
+            setPhysicalAssets={setPhysicalAssets}
             onNext={handleNext}
             onBack={handleBack}
             t={t}
@@ -260,22 +260,11 @@ const DemoBaspaket = () => {
 
         {currentStep === 3 && (
           <Step3Distribution
-            beneficiaries={beneficiaries}
-            setBeneficiaries={setBeneficiaries}
+            heirs={heirs}
+            setHeirs={setHeirs}
             totalAmount={totalDistributableAmount}
-            assets={assets}
-            personalNumber={personalNumber}
-            testament={testament}
-            setTestament={setTestament}
-            hasTestament={hasTestament}
-            setHasTestament={setHasTestament}
-            physicalAssets={physicalAssets}
-            setPhysicalAssets={setPhysicalAssets}
             onNext={handleNext}
             onBack={handleBack}
-            onSave={handleSave}
-            onComplete={handleComplete}
-            savedProgress={savedProgress}
             t={t}
           />
         )}
@@ -285,8 +274,6 @@ const DemoBaspaket = () => {
             personalNumber={personalNumber}
             heirs={heirs}
             assets={assets}
-            beneficiaries={beneficiaries}
-            testament={testament}
             physicalAssets={physicalAssets}
             onBack={handleBack}
             onComplete={handleFinalComplete}
