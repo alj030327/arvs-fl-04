@@ -9,7 +9,7 @@ import { Step2Assets } from "@/components/steps/Step2Assets";
 import { Step3Distribution } from "@/components/steps/Step3Distribution";
 import { Step4ContactInfo } from "@/components/steps/Step4ContactInfo";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
-import { generateRandomDemoData } from "@/utils/demoDataGenerator";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Heir {
   personalNumber: string;
@@ -64,14 +64,21 @@ export default function DemoBaspaket() {
   const [physicalAssets, setPhysicalAssets] = useState([]);
   const [deceasedName, setDeceasedName] = useState("");
 
-  // Generate random demo data on component mount
+  // Hämta randomiserad demo-data från Supabase Edge Function
   useEffect(() => {
-    const demoData = generateRandomDemoData();
-    setPersonalNumber(demoData.personalNumber);
-    setDeceasedName(demoData.deceasedName);
-    setHeirs(demoData.heirs);
-    setAssets(demoData.assets);
-    setBeneficiaries(demoData.beneficiaries);
+    (async () => {
+      const { data, error } = await supabase.functions.invoke('demo-flow', { body: { randomize: true } });
+      if (!error && data?.data) {
+        const demoData = data.data;
+        setPersonalNumber(demoData.personalNumber);
+        setDeceasedName(demoData.deceasedName);
+        setHeirs(demoData.heirs);
+        setAssets(demoData.assets);
+        setBeneficiaries(demoData.beneficiaries);
+      } else {
+        console.error('Kunde inte hämta demo-data från Supabase', error);
+      }
+    })();
   }, []);
 
   // Translation function for demo
