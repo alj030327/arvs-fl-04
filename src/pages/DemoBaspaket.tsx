@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,7 @@ import { Step2Assets } from "@/components/steps/Step2Assets";
 import { Step3Distribution } from "@/components/steps/Step3Distribution";
 import { Step4ContactInfo } from "@/components/steps/Step4ContactInfo";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
+import { generateRandomDemoData } from "@/utils/demoDataGenerator";
 
 interface Heir {
   personalNumber: string;
@@ -53,80 +54,25 @@ interface Beneficiary {
 export default function DemoBaspaket() {
   const [currentStep, setCurrentStep] = useState(1);
   
-  // Pre-filled data for demo
-  const [personalNumber, setPersonalNumber] = useState("199001011234");
-  const [heirs, setHeirs] = useState<Heir[]>([
-    {
-      personalNumber: "199505151234",
-      name: "Anna Andersson",
-      relationship: "Dotter",
-      inheritanceShare: 50,
-      email: "anna.andersson@email.com",
-      phone: "070-123 45 67"
-    },
-    {
-      personalNumber: "199203031234",
-      name: "Erik Eriksson", 
-      relationship: "Son",
-      inheritanceShare: 50,
-      email: "erik.eriksson@email.com",
-      phone: "070-987 65 43"
-    }
-  ]);
-
-  const [assets, setAssets] = useState<Asset[]>([
-    {
-      id: "1",
-      bank: "Handelsbanken",
-      accountType: "Lönekonto",
-      assetType: "Bankinsättning",
-      accountNumber: "1234 567 890",
-      amount: 150000
-    },
-    {
-      id: "2", 
-      bank: "SEB",
-      accountType: "ISK",
-      assetType: "Aktier",
-      accountNumber: "9876 543 210",
-      amount: 320000
-    },
-    {
-      id: "3",
-      bank: "Swedbank",
-      accountType: "Bolånekonto",
-      assetType: "Bolån",
-      accountNumber: "5555 444 333",
-      amount: 1200000
-    }
-  ]);
-
-  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([
-    {
-      id: "1",
-      name: "Anna Andersson",
-      personalNumber: "199505151234",
-      relationship: "Dotter",
-      percentage: 50,
-      accountNumber: "1111 222 333",
-      email: "anna.andersson@email.com",
-      phone: "070-123 45 67"
-    },
-    {
-      id: "2",
-      name: "Erik Eriksson",
-      personalNumber: "199203031234", 
-      relationship: "Son",
-      percentage: 50,
-      accountNumber: "4444 555 666",
-      email: "erik.eriksson@email.com",
-      phone: "070-987 65 43"
-    }
-  ]);
-
+  // Randomized demo data
+  const [personalNumber, setPersonalNumber] = useState("");
+  const [heirs, setHeirs] = useState<Heir[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [testament, setTestament] = useState(null);
   const [hasTestament, setHasTestament] = useState(false);
   const [physicalAssets, setPhysicalAssets] = useState([]);
+  const [deceasedName, setDeceasedName] = useState("");
+
+  // Generate random demo data on component mount
+  useEffect(() => {
+    const demoData = generateRandomDemoData();
+    setPersonalNumber(demoData.personalNumber);
+    setDeceasedName(demoData.deceasedName);
+    setHeirs(demoData.heirs);
+    setAssets(demoData.assets);
+    setBeneficiaries(demoData.beneficiaries);
+  }, []);
 
   // Translation function for demo
   const t = (key: string) => {
@@ -208,7 +154,7 @@ export default function DemoBaspaket() {
                   </p>
                   <div className="flex items-center gap-2 text-sm text-orange-600">
                     <span className="font-medium">Exemplet visar:</span>
-                    <span>Avliden person med 2 arvingar, 3 konton (inklusive bolån), jämn fördelning</span>
+                    <span>{deceasedName ? `${deceasedName} med ${heirs.length} arvingar, ${assets.length} konton` : 'Randomiserad demo-data laddas...'}</span>
                   </div>
                 </div>
               </div>
