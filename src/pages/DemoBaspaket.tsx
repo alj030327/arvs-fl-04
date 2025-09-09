@@ -4,13 +4,17 @@ import { Step1EstateOwners, EstateOwner } from "@/components/steps/Step1EstateOw
 import { Step2Assets } from "@/components/steps/Step2Assets";
 import { Step3Distribution } from "@/components/steps/Step3Distribution";
 import { Step4FinalSignature } from "@/components/steps/Step4FinalSignature";
-import { Scale, Globe, ArrowLeft } from "lucide-react";
+import { Scale, Globe, ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { FileText } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { FileText, Users } from "lucide-react";
+import { Label } from "@/components/ui/label";
+
+import { supabase } from "@/integrations/supabase/client";
+import { useState as usePaymentState } from "react";
 
 interface Asset {
   id: string;
@@ -62,6 +66,7 @@ interface Testament {
 }
 
 export default function DemoBaspaket() {
+  const [isProcessingPayment, setIsProcessingPayment] = usePaymentState(false);
   const { t, language, changeLanguage } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [deceasedFirstName, setDeceasedFirstName] = useState("Karl");
@@ -162,6 +167,51 @@ export default function DemoBaspaket() {
     // Reset or redirect to completion page
   };
 
+  const handlePurchaseBaspaket = async () => {
+    setIsProcessingPayment(true);
+    
+    try {
+      // Collect all demo data to store with the order
+      const estateData = {
+        deceased: {
+          firstName: deceasedFirstName,
+          lastName: deceasedLastName,
+          personalNumber: deceasedPersonalNumber
+        },
+        estateOwners,
+        assets,
+        physicalAssets,
+        beneficiaries,
+        hasTestament,
+        testament
+      };
+
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: {
+          packageType: 'baspaket',
+          estateData,
+          userEmail: null // Guest checkout
+        }
+      });
+
+      if (error) {
+        console.error('Payment error:', error);
+        alert('Ett fel uppstod vid betalningen. Försök igen.');
+        return;
+      }
+
+      if (data?.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error('Payment processing failed:', error);
+      alert('Ett fel uppstod vid betalningen. Försök igen.');
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -242,18 +292,92 @@ export default function DemoBaspaket() {
         />
 
         {currentStep === 1 && (
-          <Step1EstateOwners
-            deceasedFirstName={deceasedFirstName}
-            setDeceasedFirstName={setDeceasedFirstName}
-            deceasedLastName={deceasedLastName}
-            setDeceasedLastName={setDeceasedLastName}
-            deceasedPersonalNumber={deceasedPersonalNumber}
-            setDeceasedPersonalNumber={setDeceasedPersonalNumber}
-            estateOwners={estateOwners}
-            setEstateOwners={setEstateOwners}
-            onNext={handleNext}
-            t={t}
-          />
+          <div className="max-w-4xl mx-auto">
+            <Card>
+              <CardHeader className="text-center">
+                <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-primary" />
+                </div>
+                <CardTitle className="text-2xl">Dödsbodelägare (Demo)</CardTitle>
+                <CardDescription>
+                  Detta är förifylld demodata som visar hur steget fungerar
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Demo notice */}
+                <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                  <p className="text-sm text-orange-700">
+                    <strong>Demo:</strong> All information nedan är exempel och kan inte ändras. 
+                    Köp baspaket för att fylla i dina egna uppgifter.
+                  </p>
+                </div>
+
+                {/* Deceased person (read-only) */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Den avlidne</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Förnamn</Label>
+                      <div className="p-2 bg-muted rounded border">
+                        {deceasedFirstName}
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Efternamn</Label>
+                      <div className="p-2 bg-muted rounded border">
+                        {deceasedLastName}
+                      </div>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                      <Label>Personnummer</Label>
+                      <div className="p-2 bg-muted rounded border">
+                        {deceasedPersonalNumber}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Estate owners (read-only) */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Registrerade dödsbodelägare</h3>
+                  <div className="space-y-3">
+                    {estateOwners.map((owner) => (
+                      <div key={owner.id} className="p-4 border border-border rounded-lg bg-muted/50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-medium">{owner.firstName} {owner.lastName}</span>
+                          <Badge variant="secondary">{owner.relationshipToDeceased}</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Personnummer: {owner.personalNumber}
+                        </p>
+                        {owner.address && (
+                          <p className="text-sm text-muted-foreground mb-1">
+                            Adress: {owner.address}
+                          </p>
+                        )}
+                        {owner.phone && (
+                          <p className="text-sm text-muted-foreground mb-1">
+                            Telefon: {owner.phone}
+                          </p>
+                        )}
+                        {owner.email && (
+                          <p className="text-sm text-muted-foreground">
+                            E-post: {owner.email}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-end">
+                  <Button onClick={handleNext} size="lg">
+                    Fortsätt till tillgångar
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {currentStep === 2 && (
@@ -289,18 +413,51 @@ export default function DemoBaspaket() {
         )}
 
         {currentStep === 4 && (
-          <Step4FinalSignature
-            deceasedFirstName={deceasedFirstName}
-            deceasedLastName={deceasedLastName}
-            deceasedPersonalNumber={deceasedPersonalNumber}
-            estateOwners={estateOwners}
-            assets={assets}
-            physicalAssets={physicalAssets}
-            beneficiaries={beneficiaries}
-            onBack={handleBack}
-            onComplete={handleFinalComplete}
-            t={t}
-          />
+          <div className="max-w-4xl mx-auto space-y-6">
+            <Card>
+              <CardContent className="p-8 text-center">
+                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                  <FileText className="w-8 h-8 text-green-600" />
+                </div>
+                <h2 className="text-2xl font-bold mb-4">Demo genomförd!</h2>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Du har nu sett hela processen för vårt baspaket. För att kunna fylla i dina egna 
+                  uppgifter och generera riktiga arvsskiftesdokument, köp baspaket för endast 200 kr.
+                </p>
+                
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                  <h3 className="font-semibold text-blue-800 mb-2">Vad ingår i Baspaket?</h3>
+                  <ul className="text-sm text-blue-700 space-y-1">
+                    <li>✓ Komplett 4-stegs process för arvsskifte</li>
+                    <li>✓ Automatisk generering av alla dokument</li>
+                    <li>✓ Stöd för upp till 10 dödsbodelägare</li>
+                    <li>✓ Digital signering av dokument</li>
+                    <li>✓ E-postupport vid frågor</li>
+                  </ul>
+                </div>
+
+                <Button
+                  size="lg"
+                  className="px-8 py-3 text-lg"
+                  onClick={handlePurchaseBaspaket}
+                  disabled={isProcessingPayment}
+                >
+                  {isProcessingPayment ? (
+                    "Bearbetar..."
+                  ) : (
+                    <>
+                      Köp Baspaket - 200 kr
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+                
+                <p className="text-xs text-muted-foreground mt-4">
+                  Säker betalning via Stripe • Pengarna tillbaka-garanti
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
 
