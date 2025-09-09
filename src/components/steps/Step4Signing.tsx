@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { FileText, Users, Building2, Lock, Mail, Briefcase, CheckCircle2, Send, UserCheck, Clock, CheckCircle, XCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { PDFService } from "@/services/pdfService";
+import { UniversalPdfService } from "@/services/universalPdfService";
 
 interface Asset {
   id: string;
@@ -146,20 +146,91 @@ export const Step4Signing = ({
     setIsSendingPDF(true);
     
     try {
-      // Generate comprehensive PDF with all information
-      const pdfBlob = await PDFService.generateDistributionPDF({
-        personalNumber,
-        assets,
-        beneficiaries: beneficiaries.map(b => ({
-          name: b.name,
-          personalNumber: b.personalNumber,
-          relationship: b.relationship,
-          percentage: b.percentage,
-          amount: (b.percentage / 100) * safeDistributedAmount,
-          accountNumber: b.accountNumber
-        })),
-        totalAmount: safeDistributedAmount
+      // Prepare data for universal PDF service
+      const deceased = {
+        firstName: "Den", // Would come from Skatteverket in production  
+        lastName: "Avlidne",
+        personalNumber
+      };
+
+      // Convert heirs to estate owners format
+      const estateOwners = heirs.map((heir, index) => {
+        const [firstName, ...lastNameParts] = heir.name.replace(/\s*&\s*/g, ' ').split(' ');
+        return {
+          id: `heir-${index}`,
+          firstName: firstName || "Okänt",
+          lastName: lastNameParts.join(' ') || "Efternamn",
+          personalNumber: heir.personalNumber,
+          relationshipToDeceased: heir.relationship,
+          email: heir.email || "",
+          phone: heir.phone || "",
+          address: "Adress från Skatteverket",
+          signed: heir.signed,
+          signedAt: heir.signedAt,
+          signatureType: "bankid" as const
+        };
       });
+
+      // Convert assets to universal format
+      const universalAssets = assets.map(asset => ({
+        id: asset.id,
+        bank: asset.bank,
+        accountType: asset.accountType,
+        assetType: asset.assetType,
+        accountNumber: asset.accountNumber,
+        amount: asset.amount,
+        toRemain: asset.toRemain,
+        reasonToRemain: asset.reasonToRemain
+      }));
+
+      // Convert beneficiaries to universal format
+      const universalBeneficiaries = beneficiaries.map(b => ({
+        id: b.id,
+        personalNumber: b.personalNumber,
+        name: b.name,
+        relationship: b.relationship,
+        percentage: b.percentage,
+        accountNumber: b.accountNumber,
+        signed: b.signed,
+        signedAt: b.signedAt
+      }));
+
+      const pdfData = {
+        packageType: "komplett" as const,
+        deceased,
+        estateOwners,
+        heirs: heirs.map(heir => ({
+          personalNumber: heir.personalNumber,
+          name: heir.name,
+          relationship: heir.relationship,
+          inheritanceShare: heir.inheritanceShare,
+          signed: heir.signed,
+          signedAt: heir.signedAt,
+          email: heir.email,
+          phone: heir.phone
+        })),
+        assets: universalAssets,
+        beneficiaries: universalBeneficiaries,
+        physicalAssets: physicalAssets || [],
+        testament: testament ? {
+          id: testament.id,
+          filename: testament.filename,
+          uploadDate: testament.uploadDate,
+          verified: testament.verified
+        } : null,
+        totalAmount: safeDistributedAmount,
+        signatureMethod: "bankid" as const,
+        bankidSignatures: heirs.filter(h => h.signed).map(h => ({
+          personalNumber: h.personalNumber,
+          name: h.name,
+          signedAt: h.signedAt || new Date().toISOString(),
+          ipAddress: "192.168.1.1", // Mock IP
+          certificateInfo: "BankID Mock Certificate"
+        }))
+      };
+
+      // Generate comprehensive PDF with all information
+      const pdfBlob = await UniversalPdfService.generatePackagePDF(pdfData);
 
       if (pdfBlob) {
         // Get all email addresses from heirs
@@ -172,7 +243,7 @@ export const Step4Signing = ({
         console.log("Sending comprehensive PDF to:", emailAddresses);
         
         // Download the PDF locally as well
-        PDFService.downloadPDF(pdfBlob, PDFService.generateFilename(personalNumber));
+        UniversalPdfService.downloadPDF(pdfBlob, pdfData);
         
         toast({
           title: "Sammanfattning skickad",
