@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { FileText, Users } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { DemoDocumentSummary } from "@/components/DemoDocumentSummary";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useState as usePaymentState } from "react";
@@ -135,7 +136,7 @@ export default function DemoBaspaket() {
   const [hasTestament, setHasTestament] = useState(false);
   const [savedProgress, setSavedProgress] = useState(false);
 
-  const stepLabels = ["Dödsbodelägare", "Tillgångar", "Fördelning", "Signering"];
+  const stepLabels = ["Dödsbodelägare", "Tillgångar", "Fördelning", "Dokumentsammanställning", "Köp baspaket"];
 
   const totalFinancialAssets = assets
     .filter(a => !['Bolån', 'Privatlån', 'Kreditkort', 'Blancolån', 'Billån', 'Företagslån'].includes(a.assetType))
@@ -145,7 +146,7 @@ export default function DemoBaspaket() {
   const totalDistributableAmount = totalFinancialAssets + totalPhysicalAssets;
 
   const handleNext = () => {
-    setCurrentStep(prev => Math.min(prev + 1, 4));
+    setCurrentStep(prev => Math.min(prev + 1, 5));
   };
 
   const handleBack = () => {
@@ -163,8 +164,7 @@ export default function DemoBaspaket() {
   };
 
   const handleFinalComplete = () => {
-    console.log("Arvsskifte genomfört!");
-    // Reset or redirect to completion page
+    setCurrentStep(5); // Go to purchase step
   };
 
   const handlePurchaseBaspaket = async () => {
@@ -287,7 +287,7 @@ export default function DemoBaspaket() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <ProgressIndicator
           currentStep={currentStep}
-          totalSteps={4}
+          totalSteps={5}
           stepLabels={stepLabels}
         />
 
@@ -413,6 +413,20 @@ export default function DemoBaspaket() {
         )}
 
         {currentStep === 4 && (
+          <DemoDocumentSummary
+            deceasedFirstName={deceasedFirstName}
+            deceasedLastName={deceasedLastName}
+            deceasedPersonalNumber={deceasedPersonalNumber}
+            estateOwners={estateOwners}
+            assets={assets}
+            beneficiaries={beneficiaries}
+            totalAmount={totalDistributableAmount}
+            onBack={handleBack}
+            onComplete={handleFinalComplete}
+          />
+        )}
+
+        {currentStep === 5 && (
           <div className="max-w-4xl mx-auto space-y-6">
             <Card>
               <CardContent className="p-8 text-center">
@@ -421,16 +435,18 @@ export default function DemoBaspaket() {
                 </div>
                 <h2 className="text-2xl font-bold mb-4">Demo genomförd!</h2>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Du har nu sett hela processen för vårt baspaket. För att kunna fylla i dina egna 
-                  uppgifter och generera riktiga arvsskiftesdokument, köp baspaket för endast 200 kr.
+                  Du har nu sett hela processen för vårt baspaket och laddat ner en exempeldokument. 
+                  För att kunna fylla i dina egna uppgifter och generera riktiga arvsskiftesdokument, 
+                  köp baspaket för endast 200 kr.
                 </p>
                 
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
                   <h3 className="font-semibold text-blue-800 mb-2">Vad ingår i Baspaket?</h3>
                   <ul className="text-sm text-blue-700 space-y-1">
-                    <li>✓ Komplett 4-stegs process för arvsskifte</li>
-                    <li>✓ Automatisk generering av alla dokument</li>
+                    <li>✓ Komplett 5-stegs process för arvsskifte</li>
+                    <li>✓ Automatisk generering av alla dokument med signeringsfält</li>
                     <li>✓ Stöd för upp till 10 dödsbodelägare</li>
+                    <li>✓ Professionella PDF-dokument</li>
                     <li>✓ Digital signering av dokument</li>
                     <li>✓ E-postupport vid frågor</li>
                   </ul>
@@ -455,6 +471,13 @@ export default function DemoBaspaket() {
                 <p className="text-xs text-muted-foreground mt-4">
                   Säker betalning via Stripe • Pengarna tillbaka-garanti
                 </p>
+
+                <div className="mt-6">
+                  <Button variant="outline" onClick={handleBack}>
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Tillbaka till dokumentsammanställning
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
