@@ -46,9 +46,11 @@ interface FormData {
   
   // Tillgångar
   assets: Array<{
+    bank: string;
     type: string;
-    description: string;
+    accountNumber: string;
     value: string;
+    description: string;
     location: string;
   }>;
 }
@@ -99,9 +101,11 @@ export default function DemoBasicForm() {
     setFormData({
       ...formData,
       assets: [...formData.assets, {
+        bank: "",
         type: "",
-        description: "",
+        accountNumber: "",
         value: "",
+        description: "",
         location: ""
       }]
     });
@@ -280,7 +284,7 @@ export default function DemoBasicForm() {
     
     // Convert form data to assets format for BasicDocumentSummary
     const processedAssets = formData.assets.map(asset => ({
-      bank: asset.bank || asset.type || 'Okänd bank',
+      bank: asset.bank || 'Okänd bank',
       accountNumber: asset.accountNumber || 'Okänt kontonummer',
       amount: parseFloat(asset.value) || 0,
       accountType: asset.type || 'Okänd kontotyp'
