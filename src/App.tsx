@@ -9,6 +9,7 @@ import Demo from "./pages/Demo";
 import DemoBasic from "./pages/DemoBasic";
 import DemoInstructions from "./pages/DemoInstructions";
 import DemoBasicForm from "./pages/DemoBasicForm";
+import TestProcess from "./pages/TestProcess";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/demo-basic" element={<DemoBasic />} />
           <Route path="/demo-instructions" element={<DemoInstructions />} />
           <Route path="/demo-basic-form" element={<DemoBasicForm />} />
+          <Route path="/test-process" element={<TestProcess />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
