@@ -6,6 +6,7 @@ import { Step3Distribution } from "@/components/steps/Step3Distribution";
 import { Step4ContactInfo } from "@/components/steps/Step4ContactInfo";
 import { Step5BeneficiarySigning } from "@/components/steps/Step5BeneficiarySigning";
 import { Step4Signing } from "@/components/steps/Step4Signing";
+import { KomplettDocumentSummary } from "@/components/KomplettDocumentSummary";
 import { Scale, Globe } from "lucide-react";
 import { PhysicalAsset } from "@/components/PhysicalAssets";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -80,7 +81,7 @@ const Process = () => {
   const totalDistributableAmount = assets.reduce((sum, asset) => sum + (asset.toRemain ? 0 : asset.amount), 0);
 
   const handleNext = () => {
-    setCurrentStep(prev => Math.min(prev + 1, 6));
+    setCurrentStep(prev => Math.min(prev + 1, 7));
   };
 
   const handleBack = () => {
@@ -100,8 +101,7 @@ const Process = () => {
   };
 
   const handleFinalComplete = () => {
-    // Reset or redirect to completion page
-    console.log("Arvsskifte genomfört!");
+    setCurrentStep(7); // Go to document summary
   };
 
   return (
@@ -138,10 +138,10 @@ const Process = () => {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <ProgressIndicator 
-          currentStep={currentStep} 
-          totalSteps={6} 
-          stepLabels={stepLabels} 
+        <ProgressIndicator
+          currentStep={currentStep}
+          totalSteps={7}
+          stepLabels={stepLabels}
         />
 
         {currentStep === 1 && (
@@ -221,6 +221,20 @@ const Process = () => {
             onBack={handleBack}
             onComplete={handleFinalComplete}
             t={t}
+          />
+        )}
+
+        {currentStep === 7 && (
+          <KomplettDocumentSummary
+            personalNumber={personalNumber}
+            heirs={heirs}
+            assets={assets}
+            beneficiaries={beneficiaries}
+            physicalAssets={physicalAssets}
+            testament={testament}
+            totalAmount={totalDistributableAmount}
+            onBack={handleBack}
+            onComplete={() => console.log("Komplett process avslutad!")}
           />
         )}
       </div>

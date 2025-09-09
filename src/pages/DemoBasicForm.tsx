@@ -6,13 +6,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { BasicDocumentSummary } from "@/components/BasicDocumentSummary";
 import { 
   Download, 
   Home,
   Info,
   Plus,
   Trash2,
-  Calculator
+  Calculator,
+  ArrowLeft
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
@@ -52,6 +54,7 @@ interface FormData {
 }
 
 export default function DemoBasicForm() {
+  const [currentStep, setCurrentStep] = useState<'form' | 'summary'>('form');
   const [formData, setFormData] = useState<FormData>({
     executorPersonalNumber: "",
     executorName: "",
@@ -117,6 +120,10 @@ export default function DemoBasicForm() {
 
   const totalShare = formData.heirs.reduce((sum, heir) => sum + (parseFloat(heir.share) || 0), 0);
   const totalValue = formData.assets.reduce((sum, asset) => sum + (parseFloat(asset.value) || 0), 0);
+
+  const handleCompleteForm = () => {
+    setCurrentStep('summary');
+  };
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -270,7 +277,14 @@ export default function DemoBasicForm() {
 
     doc.save('arvskifte-baspaket.pdf');
   };
-
+    
+    // Convert form data to assets format for BasicDocumentSummary
+    const processedAssets = formData.assets.map(asset => ({
+      bank: asset.bank || asset.type || 'Okänd bank',
+      accountNumber: asset.accountNumber || 'Okänt kontonummer',
+      amount: parseFloat(asset.value) || 0,
+      accountType: asset.type || 'Okänd kontotyp'
+    }));
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
