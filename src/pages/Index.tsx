@@ -232,7 +232,7 @@ const Index = () => {
             <Card className="relative">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Grundpaket</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">2 995 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">499 kr</div>
                 <CardDescription>För enklare arvskiften</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -266,7 +266,7 @@ const Index = () => {
               </div>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Komplett</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">4 995 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">2 499 kr</div>
                 <CardDescription>För komplexa arvskiften</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

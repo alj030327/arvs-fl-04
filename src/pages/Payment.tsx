@@ -48,7 +48,7 @@ export default function Payment() {
             }`} onClick={() => setSelectedPlan('basic')}>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Grundpaket</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">500 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">499 kr</div>
                 <CardDescription>För enklare arvskiften</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -84,7 +84,7 @@ export default function Payment() {
               </div>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Komplett</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">2 500 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">2 499 kr</div>
                 <CardDescription>För komplexa arvskiften</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -137,7 +137,7 @@ export default function Payment() {
                 <div className="flex justify-between items-center">
                   <span>{selectedPlan === 'basic' ? 'Grundpaket' : 'Komplett paket'}</span>
                   <span className="font-bold text-primary">
-                    {selectedPlan === 'basic' ? '500 kr' : '2 500 kr'}
+                    {selectedPlan === 'basic' ? '499 kr' : '2 499 kr'}
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
@@ -174,7 +174,7 @@ export default function Payment() {
                 ) : (
                   <>
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Betala {selectedPlan === 'basic' ? '500 kr' : '2 500 kr'}
+                    Betala {selectedPlan === 'basic' ? '499 kr' : '2 499 kr'}
                   </>
                 )}
               </Button>
