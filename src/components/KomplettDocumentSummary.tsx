@@ -60,7 +60,6 @@ interface KomplettDocumentSummaryProps {
   assets: Asset[];
   beneficiaries: Beneficiary[];
   physicalAssets: PhysicalAsset[];
-  safeDepositBoxItems?: PhysicalAsset[];
   testament: Testament | null;
   totalAmount: number;
   onBack: () => void;
@@ -73,7 +72,6 @@ export const KomplettDocumentSummary = ({
   assets,
   beneficiaries,
   physicalAssets,
-  safeDepositBoxItems = [],
   testament,
   totalAmount,
   onBack,

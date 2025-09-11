@@ -13,8 +13,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { FileText, Users } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { DemoDocumentSummary } from "@/components/DemoDocumentSummary";
-import { PhysicalAsset } from "@/components/PhysicalAssets";
-import { SafeDepositBoxItem } from "@/components/SafeDepositBox";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useState as usePaymentState } from "react";
@@ -30,6 +28,13 @@ interface Asset {
   reasonToRemain?: string;
 }
 
+interface PhysicalAsset {
+  id: string;
+  name: string;
+  description: string;
+  estimatedValue: number;
+  category: string;
+}
 
 interface Beneficiary {
   id: string;
@@ -109,7 +114,6 @@ export default function DemoBaspaket() {
     }
   ]);
   const [physicalAssets, setPhysicalAssets] = useState<PhysicalAsset[]>([]);
-  const [safeDepositBoxItems, setSafeDepositBoxItems] = useState<SafeDepositBoxItem[]>([]);
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([
     {
       id: "1",
@@ -380,10 +384,6 @@ export default function DemoBaspaket() {
           <Step2Assets
             assets={assets}
             setAssets={setAssets}
-            physicalAssets={physicalAssets}
-            setPhysicalAssets={setPhysicalAssets}
-            safeDepositBoxItems={safeDepositBoxItems}
-            setSafeDepositBoxItems={setSafeDepositBoxItems}
             onNext={handleNext}
             onBack={handleBack}
             t={t}
@@ -403,8 +403,6 @@ export default function DemoBaspaket() {
             setHasTestament={setHasTestament}
             physicalAssets={[]}
             setPhysicalAssets={() => {}}
-            assetAllocations={[]}
-            setAssetAllocations={() => {}}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}

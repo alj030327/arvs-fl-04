@@ -8,8 +8,6 @@ import { Building2, Plus, Trash2, Lock, Unlock } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { PhysicalAssets, PhysicalAsset } from "@/components/PhysicalAssets";
-import { SafeDepositBox, SafeDepositBoxItem } from "@/components/SafeDepositBox";
 interface Asset {
   id: string;
   bank: string;
@@ -24,10 +22,6 @@ interface Asset {
 interface Step2Props {
   assets: Asset[];
   setAssets: (assets: Asset[]) => void;
-  physicalAssets: PhysicalAsset[];
-  setPhysicalAssets: (assets: PhysicalAsset[]) => void;
-  safeDepositBoxItems: SafeDepositBoxItem[];
-  setSafeDepositBoxItems: (items: SafeDepositBoxItem[]) => void;
   onNext: () => void;
   onBack: () => void;
   t: (key: string) => string;
@@ -35,10 +29,6 @@ interface Step2Props {
 export const Step2Assets = ({
   assets,
   setAssets,
-  physicalAssets,
-  setPhysicalAssets,
-  safeDepositBoxItems,
-  setSafeDepositBoxItems,
   onNext,
   onBack,
   t
@@ -280,9 +270,6 @@ export const Step2Assets = ({
 
   // Säkerställ att distributable amount aldrig blir negativt
   const safeDistributableAmount = Math.max(0, totalDistributableAmount);
-
-  // Calculate net assets (total assets minus debts)
-  const netAssets = totalAssets;
   return <div className="max-w-4xl mx-auto">
       <Card>
         <CardHeader className="text-center">
@@ -507,24 +494,6 @@ export const Step2Assets = ({
                 </div>
               </div>
             </div>}
-
-          {/* Physical Assets Section */}
-          <div className="mt-8">
-            <PhysicalAssets 
-              physicalAssets={physicalAssets}
-              setPhysicalAssets={setPhysicalAssets}
-              beneficiaries={[]} // Empty as beneficiaries are not defined yet in step 2
-            />
-          </div>
-
-          {/* Safe Deposit Box Section */}
-          <div className="mt-8">
-            <SafeDepositBox 
-              items={safeDepositBoxItems}
-              setItems={setSafeDepositBoxItems}
-              beneficiaries={[]} // Empty as beneficiaries are not defined yet in step 2
-            />
-          </div>
 
           <div className="flex justify-between mt-8">
             <Button variant="outline" onClick={onBack}>

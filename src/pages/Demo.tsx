@@ -12,7 +12,6 @@ import { Step5BeneficiarySigning } from "@/components/steps/Step5BeneficiarySign
 import { Step4Signing } from "@/components/steps/Step4Signing";
 import { useTranslation } from "@/hooks/useTranslation";
 import { PhysicalAsset } from "@/components/PhysicalAssets";
-import { SafeDepositBoxItem } from "@/components/SafeDepositBox";
 
 // Types from the original process
 interface Asset {
@@ -75,7 +74,6 @@ export default function Demo() {
   const [testament, setTestament] = useState<Testament | null>(null);
   const [hasTestament, setHasTestament] = useState(false);
   const [physicalAssets, setPhysicalAssets] = useState<PhysicalAsset[]>([]);
-  const [safeDepositBoxItems, setSafeDepositBoxItems] = useState<SafeDepositBoxItem[]>([]);
   const [savedProgress, setSavedProgress] = useState(false);
 
   const stepLabels = getStepLabels();
@@ -183,10 +181,6 @@ export default function Demo() {
           <Step2Assets
             assets={assets}
             setAssets={setAssets}
-            physicalAssets={physicalAssets}
-            setPhysicalAssets={setPhysicalAssets}
-            safeDepositBoxItems={safeDepositBoxItems}
-            setSafeDepositBoxItems={setSafeDepositBoxItems}
             onNext={handleNext}
             onBack={handleBack}
             t={t}
@@ -206,8 +200,6 @@ export default function Demo() {
             setHasTestament={setHasTestament}
             physicalAssets={physicalAssets}
             setPhysicalAssets={setPhysicalAssets}
-            assetAllocations={[]}
-            setAssetAllocations={() => {}}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}

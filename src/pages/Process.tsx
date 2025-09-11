@@ -9,7 +9,6 @@ import { Step4Signing } from "@/components/steps/Step4Signing";
 import { KomplettDocumentSummary } from "@/components/KomplettDocumentSummary";
 import { Scale, Globe } from "lucide-react";
 import { PhysicalAsset } from "@/components/PhysicalAssets";
-import { SafeDepositBoxItem } from "@/components/SafeDepositBox";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -22,7 +21,6 @@ interface Asset {
   accountNumber: string;
   amount: number;
   toRemain?: boolean;
-  amountToRemain?: number;
   reasonToRemain?: string;
 }
 
@@ -75,42 +73,12 @@ const Process = () => {
   const [testament, setTestament] = useState<Testament | null>(null);
   const [hasTestament, setHasTestament] = useState(false);
   const [physicalAssets, setPhysicalAssets] = useState<PhysicalAsset[]>([]);
-  const [safeDepositBoxItems, setSafeDepositBoxItems] = useState<SafeDepositBoxItem[]>([]);
   const [savedProgress, setSavedProgress] = useState(false);
 
   const stepLabels = getStepLabels();
 
-  // State for asset allocations
-  const [assetAllocations, setAssetAllocations] = useState<Array<{
-    assetId: string;
-    beneficiaryId: string;
-    beneficiaryName: string;
-    amount?: number;
-  }>>([]);
-
-  // Calculate net assets excluding specifically allocated assets
-  const calculateNetAssetsForDistribution = () => {
-    const allocatedAssetIds = assetAllocations.map(a => a.assetId);
-    
-    return assets.reduce((sum, asset) => {
-      // Skip if asset is specifically allocated
-      if (allocatedAssetIds.includes(asset.id)) return sum;
-      
-      const isDebt = ['Bolån', 'Privatlån', 'Kreditkort', 'Blancolån', 'Billån', 'Företagslån'].includes(asset.assetType);
-      const value = isDebt ? -Math.abs(asset.amount) : asset.amount;
-      
-      if (asset.toRemain && asset.amountToRemain !== undefined) {
-        const distributablePortion = isDebt 
-          ? asset.amountToRemain >= Math.abs(asset.amount) ? 0 : value + asset.amountToRemain
-          : value - asset.amountToRemain;
-        return sum + Math.max(0, distributablePortion);
-      }
-      
-      return sum + (asset.toRemain ? 0 : value);
-    }, 0);
-  };
-
-  const totalDistributableAmount = Math.max(0, calculateNetAssetsForDistribution());
+  const totalAmount = assets.reduce((sum, asset) => sum + asset.amount, 0);
+  const totalDistributableAmount = assets.reduce((sum, asset) => sum + (asset.toRemain ? 0 : asset.amount), 0);
 
   const handleNext = () => {
     setCurrentStep(prev => Math.min(prev + 1, 7));
@@ -191,10 +159,6 @@ const Process = () => {
           <Step2Assets
             assets={assets}
             setAssets={setAssets}
-            physicalAssets={physicalAssets}
-            setPhysicalAssets={setPhysicalAssets}
-            safeDepositBoxItems={safeDepositBoxItems}
-            setSafeDepositBoxItems={setSafeDepositBoxItems}
             onNext={handleNext}
             onBack={handleBack}
             t={t}
@@ -214,8 +178,6 @@ const Process = () => {
             setHasTestament={setHasTestament}
             physicalAssets={physicalAssets}
             setPhysicalAssets={setPhysicalAssets}
-            assetAllocations={assetAllocations}
-            setAssetAllocations={setAssetAllocations}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}
@@ -269,7 +231,6 @@ const Process = () => {
             assets={assets}
             beneficiaries={beneficiaries}
             physicalAssets={physicalAssets}
-            safeDepositBoxItems={safeDepositBoxItems}
             testament={testament}
             totalAmount={totalDistributableAmount}
             onBack={handleBack}
