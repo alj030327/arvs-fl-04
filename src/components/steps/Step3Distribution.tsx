@@ -12,6 +12,8 @@ import { TestamentUpload } from "@/components/TestamentUpload";
 import { PhysicalAssets, PhysicalAsset } from "@/components/PhysicalAssets";
 import { AssetPreferences } from "@/components/AssetPreferences";
 import { SpecificAssetAllocation } from "@/components/SpecificAssetAllocation";
+import { PhysicalAssetDistribution } from "@/components/PhysicalAssetDistribution";
+import { SafeDepositBoxItem } from "@/components/SafeDepositBox";
 import { PDFService } from "@/services/pdfService";
 import { useToast } from "@/hooks/use-toast";
 

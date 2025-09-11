@@ -9,6 +9,7 @@ import { Step4Signing } from "@/components/steps/Step4Signing";
 import { KomplettDocumentSummary } from "@/components/KomplettDocumentSummary";
 import { Scale, Globe } from "lucide-react";
 import { PhysicalAsset } from "@/components/PhysicalAssets";
+import { SafeDepositBoxItem } from "@/components/SafeDepositBox";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -73,6 +74,7 @@ const Process = () => {
   const [testament, setTestament] = useState<Testament | null>(null);
   const [hasTestament, setHasTestament] = useState(false);
   const [physicalAssets, setPhysicalAssets] = useState<PhysicalAsset[]>([]);
+  const [safeDepositBoxItems, setSafeDepositBoxItems] = useState<SafeDepositBoxItem[]>([]);
   const [savedProgress, setSavedProgress] = useState(false);
 
   const stepLabels = getStepLabels();
@@ -159,6 +161,10 @@ const Process = () => {
           <Step2Assets
             assets={assets}
             setAssets={setAssets}
+            physicalAssets={physicalAssets}
+            setPhysicalAssets={setPhysicalAssets}
+            safeDepositBoxItems={safeDepositBoxItems}
+            setSafeDepositBoxItems={setSafeDepositBoxItems}
             onNext={handleNext}
             onBack={handleBack}
             t={t}
@@ -231,6 +237,7 @@ const Process = () => {
             assets={assets}
             beneficiaries={beneficiaries}
             physicalAssets={physicalAssets}
+            safeDepositBoxItems={safeDepositBoxItems}
             testament={testament}
             totalAmount={totalDistributableAmount}
             onBack={handleBack}
