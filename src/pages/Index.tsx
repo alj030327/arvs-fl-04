@@ -252,16 +252,18 @@ const Index = () => {
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>E-poststöd</span>
                 </div>
-                <Link to="/demo-basic" className="block">
-                  <Button className="w-full mb-3" variant="outline">
-                    Demo Baspaket
-                  </Button>
-                </Link>
-                <Link to="/payment" className="block">
-                  <Button className="w-full">
-                    Välj Baspaket
-                  </Button>
-                </Link>
+                <div className="space-y-3">
+                  <Link to="/demo-basic" className="block">
+                    <Button className="w-full" variant="outline">
+                      Demo Baspaket
+                    </Button>
+                  </Link>
+                  <Link to="/payment" className="block">
+                    <Button className="w-full">
+                      Välj Baspaket
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
 
