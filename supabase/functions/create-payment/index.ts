@@ -55,12 +55,15 @@ serve(async (req) => {
     }
 
     // Determine price based on package type
-    let amount = 20000; // 200 kr in öre
+    let amount = 49900; // 499 kr in öre (default to baspaket)
     let productName = "Baspaket - Digitalt Arvsskifte";
     
-    if (packageType === 'premium') {
-      amount = 50000; // 500 kr
-      productName = "Premium - Digitalt Arvsskifte";
+    if (packageType === 'basic' || packageType === 'baspaket') {
+      amount = 49900; // 499 kr
+      productName = "Baspaket - Digitalt Arvsskifte";
+    } else if (packageType === 'komplett' || packageType === 'complete') {
+      amount = 249900; // 2499 kr
+      productName = "Komplett - Digitalt Arvsskifte";
     }
 
     console.log("[CREATE-PAYMENT] Package details", { packageType, amount, productName });
