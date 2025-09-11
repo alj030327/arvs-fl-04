@@ -403,6 +403,8 @@ export default function DemoBaspaket() {
             setHasTestament={setHasTestament}
             physicalAssets={[]}
             setPhysicalAssets={() => {}}
+            assetAllocations={[]}
+            setAssetAllocations={() => {}}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}

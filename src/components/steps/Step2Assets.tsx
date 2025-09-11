@@ -280,6 +280,9 @@ export const Step2Assets = ({
 
   // Säkerställ att distributable amount aldrig blir negativt
   const safeDistributableAmount = Math.max(0, totalDistributableAmount);
+
+  // Calculate net assets (total assets minus debts)
+  const netAssets = totalAssets;
   return <div className="max-w-4xl mx-auto">
       <Card>
         <CardHeader className="text-center">

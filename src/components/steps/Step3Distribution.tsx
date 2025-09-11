@@ -77,6 +77,8 @@ interface Step3Props {
   setHasTestament: (hasTestament: boolean) => void;
   physicalAssets: PhysicalAsset[];
   setPhysicalAssets: (assets: PhysicalAsset[]) => void;
+  assetAllocations: AssetAllocation[];
+  setAssetAllocations: (allocations: AssetAllocation[]) => void;
   onNext: () => void;
   onBack: () => void;
   onSave: () => void;
@@ -97,6 +99,8 @@ export const Step3Distribution = ({
   setHasTestament, 
   physicalAssets,
   setPhysicalAssets,
+  assetAllocations,
+  setAssetAllocations,
   onNext, 
   onBack,
   onSave,
@@ -115,7 +119,6 @@ export const Step3Distribution = ({
   });
 
   const [selectedAssets, setSelectedAssets] = useState<{[assetId: string]: {selected: boolean, percentage: number}}>({});
-  const [assetAllocations, setAssetAllocations] = useState<AssetAllocation[]>([]);
 
   const relationships = [
     "Make/Maka", "Barn", "Barnbarn", "Förälder", "Syskon", "Annan släkting", "Övrig"
@@ -170,7 +173,7 @@ export const Step3Distribution = ({
           percentage: selection.percentage
         }));
       
-      setAssetAllocations(prev => [...prev, ...newAllocations]);
+      setAssetAllocations([...assetAllocations, ...newAllocations]);
     }
 
     // Reset form
@@ -276,13 +279,33 @@ export const Step3Distribution = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="bg-muted p-4 rounded-lg">
+          {/* Net Assets and Specific Allocations Display */}
+          <div className="bg-muted p-4 rounded-lg space-y-3">
             <div className="flex justify-between items-center">
-              <span className="font-medium">{t('step3.total_amount')}:</span>
+              <span className="font-medium">Nettotillgångar för fördelning:</span>
               <span className="text-xl font-bold text-primary">
                 {totalAmount.toLocaleString('sv-SE')} SEK
               </span>
             </div>
+            
+            {assetAllocations.length > 0 && (
+              <div className="pt-2 border-t border-border">
+                <div className="text-sm font-medium mb-2">Specifika tillgångsfördelningar:</div>
+                <div className="space-y-1 text-sm">
+                  {assetAllocations.map((allocation) => {
+                    const asset = assets?.find(a => a.id === allocation.assetId);
+                    if (!asset) return null;
+                    
+                    return (
+                      <div key={allocation.assetId} className="flex justify-between text-muted-foreground">
+                        <span>{asset.bank} - {asset.accountType}</span>
+                        <span>{allocation.beneficiaryName}: {asset.amount.toLocaleString('sv-SE')} SEK</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Testament Section */}

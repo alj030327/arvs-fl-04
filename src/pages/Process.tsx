@@ -22,6 +22,7 @@ interface Asset {
   accountNumber: string;
   amount: number;
   toRemain?: boolean;
+  amountToRemain?: number;
   reasonToRemain?: string;
 }
 
@@ -79,8 +80,37 @@ const Process = () => {
 
   const stepLabels = getStepLabels();
 
-  const totalAmount = assets.reduce((sum, asset) => sum + asset.amount, 0);
-  const totalDistributableAmount = assets.reduce((sum, asset) => sum + (asset.toRemain ? 0 : asset.amount), 0);
+  // State for asset allocations
+  const [assetAllocations, setAssetAllocations] = useState<Array<{
+    assetId: string;
+    beneficiaryId: string;
+    beneficiaryName: string;
+    amount?: number;
+  }>>([]);
+
+  // Calculate net assets excluding specifically allocated assets
+  const calculateNetAssetsForDistribution = () => {
+    const allocatedAssetIds = assetAllocations.map(a => a.assetId);
+    
+    return assets.reduce((sum, asset) => {
+      // Skip if asset is specifically allocated
+      if (allocatedAssetIds.includes(asset.id)) return sum;
+      
+      const isDebt = ['Bolån', 'Privatlån', 'Kreditkort', 'Blancolån', 'Billån', 'Företagslån'].includes(asset.assetType);
+      const value = isDebt ? -Math.abs(asset.amount) : asset.amount;
+      
+      if (asset.toRemain && asset.amountToRemain !== undefined) {
+        const distributablePortion = isDebt 
+          ? asset.amountToRemain >= Math.abs(asset.amount) ? 0 : value + asset.amountToRemain
+          : value - asset.amountToRemain;
+        return sum + Math.max(0, distributablePortion);
+      }
+      
+      return sum + (asset.toRemain ? 0 : value);
+    }, 0);
+  };
+
+  const totalDistributableAmount = Math.max(0, calculateNetAssetsForDistribution());
 
   const handleNext = () => {
     setCurrentStep(prev => Math.min(prev + 1, 7));
@@ -184,6 +214,8 @@ const Process = () => {
             setHasTestament={setHasTestament}
             physicalAssets={physicalAssets}
             setPhysicalAssets={setPhysicalAssets}
+            assetAllocations={assetAllocations}
+            setAssetAllocations={setAssetAllocations}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}

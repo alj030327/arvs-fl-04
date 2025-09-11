@@ -206,6 +206,8 @@ export default function Demo() {
             setHasTestament={setHasTestament}
             physicalAssets={physicalAssets}
             setPhysicalAssets={setPhysicalAssets}
+            assetAllocations={[]}
+            setAssetAllocations={() => {}}
             onNext={handleNext}
             onBack={handleBack}
             onSave={handleSave}
