@@ -228,9 +228,14 @@ export default function Landing() {
                   <span>Grundläggande support</span>
                 </div>
                 <div className="flex gap-2">
-                  <Link to="/demo-instructions" className="flex-1">
+                  <Link to="/demo-baspaket" className="flex-1">
                     <Button className="w-full mt-6" variant="outline">
-                      Testa Baspaket
+                      Demo Baspaket
+                    </Button>
+                  </Link>
+                  <Link to="/payment" className="flex-1">
+                    <Button className="w-full mt-6">
+                      Välj Baspaket
                     </Button>
                   </Link>
                 </div>
@@ -243,7 +248,7 @@ export default function Landing() {
               </div>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Komplett</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">4 995 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">2 499 kr</div>
                 <CardDescription>Fullservice digital process</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
