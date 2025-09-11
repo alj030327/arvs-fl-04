@@ -3,10 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, Shield, Users, FileText, Gavel, ArrowRight, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-
 export default function Landing() {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -101,35 +99,19 @@ export default function Landing() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                title: "Baspaket - Traditionell process",
-                description: "Digital blankett för traditionell hantering av arvskifte",
-                features: [
-                  "Digitalt formulär som du fyller i själv",
-                  "Utskrift av alla nödvändiga dokument",
-                  "Traditionell signering på papper", 
-                  "Du hanterar bankbesök själv",
-                  "Lägre kostnad och grundläggande service"
-                ],
-                icon: FileText,
-                badge: "Ekonomisk"
-              },
-              {
-                title: "Komplett - Modern process",
-                description: "Fullservice med digital hantering från start till mål",
-                features: [
-                  "Automatisk bankintegration och datainhämtning",
-                  "BankID-signering för alla parter",
-                  "Ingen manuell hantering eller bankbesök",
-                  "Fullständig digital process",
-                  "Premium support och hjälp"
-                ],
-                icon: Shield,
-                badge: "Populärast"
-              }
-            ].map((item, index) => (
-              <Card key={index} className="relative border-primary/20">
+            {[{
+            title: "Baspaket - Traditionell process",
+            description: "Digital blankett för traditionell hantering av arvskifte",
+            features: ["Digitalt formulär som du fyller i själv", "Utskrift av alla nödvändiga dokument", "Traditionell signering på papper", "Du hanterar bankbesök själv", "Lägre kostnad och grundläggande service"],
+            icon: FileText,
+            badge: "Ekonomisk"
+          }, {
+            title: "Komplett - Modern process",
+            description: "Fullservice med digital hantering från start till mål",
+            features: ["Automatisk bankintegration och datainhämtning", "BankID-signering för alla parter", "Ingen manuell hantering eller bankbesök", "Fullständig digital process", "Premium support och hjälp"],
+            icon: Shield,
+            badge: "Populärast"
+          }].map((item, index) => <Card key={index} className="relative border-primary/20">
                 <div className="absolute -top-3 -left-3">
                   <Badge variant={index === 0 ? "outline" : "default"}>
                     {item.badge}
@@ -143,15 +125,12 @@ export default function Landing() {
                   <CardDescription className="text-lg">{item.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {item.features.map((feature, fIndex) => (
-                    <div key={fIndex} className="flex items-center gap-2">
+                  {item.features.map((feature, fIndex) => <div key={fIndex} className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 text-success flex-shrink-0" />
                       <span className="text-sm">{feature}</span>
-                    </div>
-                  ))}
+                    </div>)}
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -169,45 +148,37 @@ export default function Landing() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Spara tid och pengar",
-                description: "Komplettera ditt arvskifte på 30 minuter istället för veckor av byråkrati",
-                icon: Clock,
-                color: "text-primary"
-              },
-              {
-                title: "Säkert & transparent",
-                description: "BankID-signering och fullständig spårbarhet genom hela processen",
-                icon: Shield,
-                color: "text-success"
-              },
-              {
-                title: "Juridiskt bindande",
-                description: "Alla dokument uppfyller svenska juridiska krav och är godkända av myndigheter",
-                icon: Gavel,
-                color: "text-accent"
-              },
-              {
-                title: "Automatisk dokumentation",
-                description: "Alla handlingar genereras och arkiveras automatiskt för framtida behov",
-                icon: FileText,
-                color: "text-primary"
-              },
-              {
-                title: "Familjevänligt",
-                description: "Alla arvingar kan delta digitalt oavsett var de befinner sig i världen",
-                icon: Users,
-                color: "text-success"
-              },
-              {
-                title: "Professionell support",
-                description: "Få hjälp av våra experter när du behöver det, via telefon eller e-post",
-                icon: CheckCircle,
-                color: "text-accent"
-              }
-            ].map((benefit, index) => (
-              <Card key={index} className="hover:border-primary/20 transition-colors">
+            {[{
+            title: "Spara tid och pengar",
+            description: "Komplettera ditt arvskifte på 30 minuter istället för veckor av byråkrati",
+            icon: Clock,
+            color: "text-primary"
+          }, {
+            title: "Säkert & transparent",
+            description: "BankID-signering och fullständig spårbarhet genom hela processen",
+            icon: Shield,
+            color: "text-success"
+          }, {
+            title: "Juridiskt bindande",
+            description: "Alla dokument uppfyller svenska juridiska krav och är godkända av myndigheter",
+            icon: Gavel,
+            color: "text-accent"
+          }, {
+            title: "Automatisk dokumentation",
+            description: "Alla handlingar genereras och arkiveras automatiskt för framtida behov",
+            icon: FileText,
+            color: "text-primary"
+          }, {
+            title: "Familjevänligt",
+            description: "Alla arvingar kan delta digitalt oavsett var de befinner sig i världen",
+            icon: Users,
+            color: "text-success"
+          }, {
+            title: "Professionell support",
+            description: "Få hjälp av våra experter när du behöver det, via telefon eller e-post",
+            icon: CheckCircle,
+            color: "text-accent"
+          }].map((benefit, index) => <Card key={index} className="hover:border-primary/20 transition-colors">
                 <CardHeader>
                   <benefit.icon className={`h-8 w-8 ${benefit.color} mb-2`} />
                   <CardTitle className="text-lg">{benefit.title}</CardTitle>
@@ -215,8 +186,7 @@ export default function Landing() {
                 <CardContent>
                   <CardDescription>{benefit.description}</CardDescription>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -237,7 +207,7 @@ export default function Landing() {
             <Card className="relative">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl mb-2">Baspaket</CardTitle>
-                <div className="text-4xl font-bold text-primary mb-2">1 995 kr</div>
+                <div className="text-4xl font-bold text-primary mb-2">499 kr</div>
                 <CardDescription>Digitaliserad traditionell process</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -392,6 +362,5 @@ export default function Landing() {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 }
