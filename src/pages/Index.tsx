@@ -254,7 +254,7 @@ const Index = () => {
                 </div>
                 <Link to="/demo-basic" className="block">
                   <Button className="w-full mb-3" variant="outline">
-                    Demo baspaket
+                    Demo Baspaket
                   </Button>
                 </Link>
                 <Link to="/payment" className="block">
