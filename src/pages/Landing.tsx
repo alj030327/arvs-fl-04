@@ -45,23 +45,36 @@ export default function Landing() {
             Genomför ditt arvskifte digitalt med vår moderna, säkra och transparenta lösning. 
             Välj mellan manuell process eller fullautomatisk hantering beroende på dina behov.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/payment">
-              <Button size="lg" className="w-full sm:w-auto">
-                Komplett lösning
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link to="/demo-instructions">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                Demo Baspaket
-              </Button>
-            </Link>
-            <Link to="/demo-instructions">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                Demo Komplett
-              </Button>
-            </Link>
+          <div className="flex flex-col items-center gap-6">
+            {/* Main solution buttons - bigger */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/payment">
+                <Button className="text-lg px-8 py-4 h-auto w-full sm:w-auto min-w-[200px] bg-primary hover:bg-primary/90">
+                  Baspakets lösning
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/payment">
+                <Button size="lg" className="text-lg px-8 py-4 h-auto w-full sm:w-auto min-w-[200px]">
+                  Komplett lösning
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Demo buttons - smaller and underneath */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link to="/demo-baspaket">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto text-sm">
+                  Demo Baspaket
+                </Button>
+              </Link>
+              <Link to="/demo-instructions">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto text-sm">
+                  Demo Komplett
+                </Button>
+              </Link>
+            </div>
           </div>
           
           {/* Trust indicators */}
