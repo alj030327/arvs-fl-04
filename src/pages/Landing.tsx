@@ -302,7 +302,7 @@ export default function Landing() {
               </Button>
             </Link>
             <Link to="/demo-instructions">
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="border-white/20 text-slate-950 bg-slate-400 hover:bg-slate-300">
                 Se demo först
               </Button>
             </Link>
