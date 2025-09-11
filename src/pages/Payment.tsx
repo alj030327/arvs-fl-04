@@ -4,20 +4,61 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ArrowLeft, CreditCard, Shield, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Payment() {
   const [selectedPlan, setSelectedPlan] = useState<'basic' | 'complete'>('complete');
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handlePayment = async (plan: 'basic' | 'complete') => {
     setIsLoading(true);
     
-    // Simulate Stripe redirect
-    setTimeout(() => {
-      // In real implementation, this would redirect to Stripe
-      window.open('https://buy.stripe.com/test_demo', '_blank');
+    try {
+      // Determine package type and amount based on plan
+      const packageType = plan === 'basic' ? 'basic' : 'komplett';
+      const amount = plan === 'basic' ? 49900 : 249900; // Amount in öre (499kr = 49900 öre, 2499kr = 249900 öre)
+      
+      // Call the create-payment edge function
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: {
+          packageType,
+          amount,
+          currency: 'sek',
+          estateData: {
+            // Add any estate data if needed
+          },
+          userEmail: 'guest@example.com' // For guest checkout, replace with actual user email if authenticated
+        }
+      });
+
+      if (error) {
+        console.error('Payment error:', error);
+        toast({
+          title: "Betalningsfel",
+          description: "Det gick inte att starta betalningen. Försök igen.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (data?.url) {
+        // Redirect to Stripe checkout
+        window.open(data.url, '_blank');
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        title: "Betalningsfel",
+        description: "Det gick inte att starta betalningen. Försök igen.",
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
