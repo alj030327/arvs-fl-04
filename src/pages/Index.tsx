@@ -231,7 +231,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             <Card className="relative">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl mb-2">Grundpaket</CardTitle>
+                <CardTitle className="text-2xl mb-2">Baspaket</CardTitle>
                 <div className="text-4xl font-bold text-primary mb-2">499 kr</div>
                 <CardDescription>För enklare arvskiften</CardDescription>
               </CardHeader>
@@ -252,9 +252,14 @@ const Index = () => {
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>E-poststöd</span>
                 </div>
-                <Link to="/process" className="block">
-                  <Button className="w-full mt-6" variant="outline">
-                    Välj Grundpaket
+                <Link to="/demo-basic" className="block">
+                  <Button className="w-full mb-3" variant="outline">
+                    Demo baspaket
+                  </Button>
+                </Link>
+                <Link to="/payment" className="block">
+                  <Button className="w-full">
+                    Välj Baspaket
                   </Button>
                 </Link>
               </CardContent>
@@ -290,8 +295,13 @@ const Index = () => {
                   <CheckCircle className="h-5 w-5 text-success" />
                   <span>Juridisk granskning</span>
                 </div>
-                <Link to="/process" className="block">
-                  <Button className="w-full mt-6">
+                <Link to="/demo" className="block">
+                  <Button className="w-full mb-3" variant="outline">
+                    Se demo
+                  </Button>
+                </Link>
+                <Link to="/payment" className="block">
+                  <Button className="w-full">
                     Välj Komplett
                   </Button>
                 </Link>
